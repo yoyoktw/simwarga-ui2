@@ -66,6 +66,7 @@
         </a> -->
 
         <div class="header-fields">
+            <!--
             <a (click)="rltAndLtr()" class="list-group-item">
                 <span><i class="fa fa-arrows-h"></i>&nbsp; RTL/LTR</span>
             </a>
@@ -112,7 +113,7 @@
                         </li>
                     </ul>
                 </li>
-            </div>
+            </div> -->
             <div class="nested-menu">
                 <a (click)="addExpandClass('profile')" class="list-group-item">
                     <span><i class="fa fa-user"></i>&nbsp; John Smith</span>
@@ -124,7 +125,7 @@
                                 <span><i class="fa fa-fw fa-user"></i> {{ 'Profile' | translate }}</span>
                             </a>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a href="javascript:void(0)">
                                 <span><i class="fa fa-fw fa-envelope"></i> {{ 'Inbox' | translate }}</span>
                             </a>
@@ -133,7 +134,7 @@
                             <a href="javascript:void(0)">
                                 <span><i class="fa fa-fw fa-gear"></i> {{ 'Settings' | translate }}</span>
                             </a>
-                        </li>
+                        </li> -->
                         <li>
                             <a (click)="onLoggedout()" [routerLink]="['/login']">
                                 <span><i class="fa fa-fw fa-power-off"></i> {{ 'Log Out' | translate }}</span>
