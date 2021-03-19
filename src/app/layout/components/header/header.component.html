@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg fixed-top">
-    <a class="navbar-brand" href="#">SIM Warga </a>
+    <a class="navbar-brand" href="#"><h4>&nbsp;&nbsp;Sistem Informasi Warga </h4></a>
     <button (click)="toggleSidebar()" class="navbar-toggler" type="button">
-        <!-- <span class="navbar-toggler-icon"></span> -->
+        <span class="navbar-toggler-icon"></span>
         <i aria-hidden="true" class="fa fa-bars text-muted"></i>
     </button>
     <div class="collapse navbar-collapse">
@@ -9,6 +9,11 @@
             <input class="form-control mr-sm-2" placeholder="{{ 'Search' | translate }}" type="text" />
         </form> -->
         <ul class="navbar-nav ml-auto">
+            &nbsp;
+            <!-- <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" placeholder="{{ 'Search' | translate }}" type="text" />
+            </form>
+            &nbsp; -->
             <!-- <li class="nav-item d-none d-xl-block">
                 <a
                     class="nav-link btn mt-1"
@@ -128,12 +133,13 @@
             -->
             <li class="nav-item dropdown" ngbDropdown>
                 <a class="nav-link" href="javascript:void(0)" ngbDropdownToggle>
-                    <i class="fa fa-user"></i> John Smith <b class="caret"></b>
+                    <i class="fa fa-user"></i>&nbsp;&nbsp;&nbsp;{{ username }}&nbsp;&nbsp;
+                    <b class="caret"></b>
                 </a>
                 <div class="dropdown-menu-right" ngbDropdownMenu>
-                    <a class="dropdown-item" href="javascript:void(0)">
+                    <!-- <a class="dropdown-item" href="javascript:void(0)">
                         <i class="fa fa-fw fa-user"></i> {{ 'Profile' | translate }}
-                    </a>
+                    </a> -->
                     <!-- <a class="dropdown-item" href="javascript:void(0)">
                         <i class="fa fa-fw fa-envelope"></i> {{ 'Inbox' | translate }}
                     </a>

@@ -34,19 +34,27 @@ export class LoginComponent implements OnInit {
         };
 
         this.authService
-        .login(loginData)
-        .pipe(first())
-        // tslint:disable-next-line: deprecation
-        .subscribe(
-            (response) => {
-                if (response) {
-                    console.log('login');
-                    this.router.navigate(['/dashboard']);
+            .login(loginData)
+            .pipe(first())
+            // tslint:disable-next-line: deprecation
+            .subscribe(
+                (response) => {
+                    if (response) {
+                        console.log('login');
+                        // tslint:disable-next-line: deprecation
+                        this.authService.getCurrentUser().pipe(first()).subscribe(
+                            (responseUser) => {
+                                if (responseUser) {
+                                    this.router.navigate(['/warga']);
+                                }
+                            }
+                        );
+                        // this.router.navigate(['/warga']);
+                    }
+                },
+                (error) => {
+                    console.log('login failed');
                 }
-            },
-            (error) => {
-                console.log('login failed');
-            }
-        );
+            );
     }
 }

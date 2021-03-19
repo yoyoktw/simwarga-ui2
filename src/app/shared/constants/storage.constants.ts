@@ -1,0 +1,7 @@
+export class StorageConstants {
+    public static AUTH_USERNAME = 'auth-username';
+    public static AUTH_ACCESSTOKEN = 'auth-accessToken';
+    public static AUTH_EXPIRESIN = 'auth-expiresIn';
+    public static IS_LOGGEDIN = 'isLoggedin';
+    public static CURRENT_USER = 'currentUser';
+}

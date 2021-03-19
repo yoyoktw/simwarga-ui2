@@ -7,13 +7,15 @@ const routes: Routes = [
         path: '',
         component: LayoutComponent,
         children: [
-            { path: '', redirectTo: 'dashboard', pathMatch: 'prefix' },
+            { path: '', redirectTo: 'warga', pathMatch: 'prefix' },
             {
-                path: 'dashboard',
-                loadChildren: () => import('./dashboard/dashboard.module').then((m) => m.DashboardModule)
+                path: 'warga',
+                loadChildren: () => import('./warga/warga.module').then((m) => m.WargaModule)
             },
+            { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then((m) => m.DashboardModule) },
             { path: 'charts', loadChildren: () => import('./charts/charts.module').then((m) => m.ChartsModule) },
             { path: 'tables', loadChildren: () => import('./tables/tables.module').then((m) => m.TablesModule) },
+            { path: 'warga', loadChildren: () => import('./warga/warga.module').then((m) => m.WargaModule) },
             { path: 'forms', loadChildren: () => import('./form/form.module').then((m) => m.FormModule) },
             {
                 path: 'bs-element',

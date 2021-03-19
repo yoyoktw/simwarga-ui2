@@ -1,6 +1,9 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { StorageMap } from '@ngx-pwa/local-storage';
 import { TranslateService } from '@ngx-translate/core';
+import { StorageConstants } from '../../../shared/constants/storage.constants';
+import { UserDto } from '../../../core/dto/user.dto';
 import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
@@ -13,10 +16,11 @@ export class SidebarComponent implements OnInit {
     collapsed: boolean;
     showMenu: string;
     pushRightClass: string;
+    public username: String;
 
     @Output() collapsedEvent = new EventEmitter<boolean>();
 
-    constructor(private translate: TranslateService, public router: Router, private authService: AuthService) {
+    constructor(private translate: TranslateService, public router: Router, private authService: AuthService, private storage: StorageMap) {
         // tslint:disable-next-line: deprecation
         this.router.events.subscribe((val) => {
             if (val instanceof NavigationEnd && window.innerWidth <= 992 && this.isToggled()) {
@@ -30,6 +34,13 @@ export class SidebarComponent implements OnInit {
         this.collapsed = false;
         this.showMenu = '';
         this.pushRightClass = 'push-right';
+
+        // tslint:disable-next-line: deprecation
+        this.storage.get(StorageConstants.CURRENT_USER).subscribe((currentUser: UserDto) => {
+            if (currentUser !== undefined) {
+                this.username = currentUser.username ? currentUser.username : currentUser.email;
+            }
+        });
     }
 
     eventCalled() {
