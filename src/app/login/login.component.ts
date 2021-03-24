@@ -3,6 +3,8 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { AuthService } from '../core/services/auth.service';
+import { TipesService } from '../core/services/tipes.service';
+import { UtilsService } from '../core/services/Utils.service';
 import { routerTransition } from '../router.animations';
 
 @Component({
@@ -13,13 +15,17 @@ import { routerTransition } from '../router.animations';
 })
 export class LoginComponent implements OnInit {
     public loginForm: FormGroup;
-    constructor(private authService: AuthService, private router: Router) {}
+    constructor(private authService: AuthService,
+        private tipesService: TipesService,
+        private utilsService: UtilsService,
+        private router: Router) {
+            this.loginForm = new FormGroup({
+                username: new FormControl(),
+                password: new FormControl()
+            });
+        }
 
     ngOnInit() {
-        this.loginForm = new FormGroup({
-            username: new FormControl(),
-            password: new FormControl()
-        });
     }
 
     onLoggedin() {
@@ -41,7 +47,8 @@ export class LoginComponent implements OnInit {
                 (response) => {
                     if (response) {
                         console.log('login');
-                        // tslint:disable-next-line: deprecation
+                        this.tipesService.getTipes().subscribe();
+                        this.utilsService.getUtils().subscribe();
                         this.authService.getCurrentUser().pipe(first()).subscribe(
                             (responseUser) => {
                                 if (responseUser) {

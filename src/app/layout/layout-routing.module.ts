@@ -16,6 +16,10 @@ const routes: Routes = [
             { path: 'charts', loadChildren: () => import('./charts/charts.module').then((m) => m.ChartsModule) },
             { path: 'tables', loadChildren: () => import('./tables/tables.module').then((m) => m.TablesModule) },
             { path: 'warga', loadChildren: () => import('./warga/warga.module').then((m) => m.WargaModule) },
+            {
+                path: 'tipes',
+                loadChildren: () => import('./settings/tipes/tipes.module').then((m) => m.TipesModule)
+            },
             { path: 'forms', loadChildren: () => import('./form/form.module').then((m) => m.FormModule) },
             {
                 path: 'bs-element',

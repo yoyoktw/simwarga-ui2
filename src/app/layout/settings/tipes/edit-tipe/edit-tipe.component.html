@@ -1,0 +1,32 @@
+<div [@routerTransition]>
+    <app-page-header [heading]="'Edit Tipe'" [icon]="'fa-table'"></app-page-header>
+</div>
+
+<form [formGroup]="tipeForm" (ngSubmit)="onFormSubmit()">
+    <div class="form-group row">
+        <!-- <div class="col-sm-2">
+        </div> -->
+        <div class="col-sm-6">
+            <button type="submit" class="btn btn-outline-primary mr-2 pull-left" >Simpan</button>
+            <button type="button" class="btn btn-outline-primary mr-2 pull-left" [routerLink]="['/tipes']">Daftar Tipe</button>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="tipeId" class="col-sm-2 col-form-label">Id</label>
+        <div class="col-sm-6">
+          <input type="text" formControlName="tipeId" readonly class="form-control-plaintext" id="tipeId">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="namaTipe" class="col-sm-2 col-form-label">Nama tipe</label>
+        <div class="col-sm-6">
+          <input type="test" formControlName="namaTipe" class="form-control" id="namaTipe">
+        </div>
+    </div>
+</form>
+
+<p>
+    <ngb-alert [dismissible]="true" type="{{ alertType }}" *ngIf="!isAlertClosed" (close)="isAlertClosed=true">
+        {{ alertMessage }}
+    </ngb-alert>
+</p>

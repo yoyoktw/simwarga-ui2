@@ -4,7 +4,7 @@
             <i class="fa fa-fw fa-table"></i>&nbsp;
             <span>{{ 'Warga' | translate }}</span>
         </a>
-        <a [routerLinkActive]="['router-link-active']" [routerLink]="['/kk']" class="list-group-item">
+        <a [routerLinkActive]="['router-link-active']" [routerLink]="['/forms']" class="list-group-item">
             <i class="fa fa-fw fa-table"></i>&nbsp;
             <span>{{ 'Kartu Keluarga' | translate }}</span>
         </a>
@@ -111,20 +111,20 @@
             </a>
             <li [class.expand]="1" class="nested">
                 <ul class="submenu">
-                    <li>
-                        <a href="javascript:void(0)">
+                    <!-- <li>
+                        <a href="javascript:void(0)" class="list-group-item">
                             <i class="fa fa-monument"></i>&nbsp;
                             <span>{{ 'Users' | translate }}</span>
                         </a>
-                    </li>
+                    </li> -->
                     <li>
-                        <a href="javascript:void(0)">
+                        <a [routerLinkActive]="['router-link-active']" [routerLink]="['/tipes']" class="list-group-item">
                             <i class="fa fa-monument"></i>&nbsp;
                             <span>{{ 'Tipes' | translate }}</span>
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:void(0)">
+                        <a [routerLinkActive]="['router-link-active']" [routerLink]="['/forms']" class="list-group-item">
                             <i class="fa fa-monument"></i>&nbsp;
                             <span>{{ 'Utils' | translate }}</span>
                         </a>
