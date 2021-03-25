@@ -7,4 +7,6 @@ export class StorageConstants {
 
     public static SETTINGS_TIPES = 'tipes';
     public static SETTINGS_UTILS = 'utils';
+
+    public static SETTINGS_WARGA = 'warga';
 }

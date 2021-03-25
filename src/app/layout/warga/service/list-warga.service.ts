@@ -4,13 +4,14 @@ import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
 
 import {DecimalPipe} from '@angular/common';
 import {debounceTime, delay, switchMap, tap} from 'rxjs/operators';
-import {SortColumn, SortDirection} from '../util/tipes-sortable.directive';
+import {SortColumn, SortDirection} from '../util/warga-sortable.directive';
 import { StorageMap } from '@ngx-pwa/local-storage';
-import { ListTipe } from '../util/list-tipe';
-import { StorageConstants } from '../../../../shared/constants/storage.constants';
+import { ListWarga } from '../util/list-warga';
+import { StorageConstants } from '../../../shared/constants/storage.constants';
+import { WargaDto } from '../../../core/dto/warga.dto';
 
 interface SearchResult {
-  tipes: ListTipe[];
+  wargas: ListWarga[];
   total: number;
 }
 
@@ -24,7 +25,7 @@ interface State {
 
 const compare = (v1: string | number, v2: string | number) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
 
-function sort(tipes: ListTipe[], column: SortColumn, direction: string): ListTipe[] {
+function sort(tipes: ListWarga[], column: SortColumn, direction: string): ListWarga[] {
   if (direction === '' || column === '') {
     return tipes;
   } else {
@@ -35,18 +36,21 @@ function sort(tipes: ListTipe[], column: SortColumn, direction: string): ListTip
   }
 }
 
-function matches(tipe: ListTipe, term: string, pipe: PipeTransform) {
-    return tipe.nama.toLowerCase().includes(term.toLowerCase());
+function matches(warga: ListWarga, term: string, pipe: PipeTransform) {
+    return warga.nik.toLowerCase().includes(term.toLowerCase())
+    || warga.nama.toLowerCase().includes(term.toLowerCase())
+    || pipe.transform(warga.rt).includes(term)
+    || warga.email.toLowerCase().includes(term.toLowerCase());
 }
 
 @Injectable({providedIn: 'root'})
-export class ListTipesService {
+export class ListWargaService {
   private _loading$ = new BehaviorSubject<boolean>(true);
   private _search$ = new Subject<void>();
-  private _tipes$ = new BehaviorSubject<ListTipe[]>([]);
+  private _listWarga$ = new BehaviorSubject<ListWarga[]>([]);
   private _total$ = new BehaviorSubject<number>(0);
 
-  private _tipeList;
+  private _wargaList;
 
   private _state: State = {
     page: 1,
@@ -64,19 +68,19 @@ export class ListTipesService {
       delay(200),
       tap(() => this._loading$.next(false))
     ).subscribe(result => {
-      this._tipes$.next(result.tipes);
+      this._listWarga$.next(result.wargas);
       this._total$.next(result.total);
     });
 
     this._search$.next();
 
-    this.storage.get(StorageConstants.SETTINGS_TIPES).subscribe((tipes: ListTipe[]) => {
-        this._tipeList = tipes;
+    this.storage.get(StorageConstants.SETTINGS_WARGA).subscribe((daftarWarga: WargaDto[]) => {
+        this._wargaList = daftarWarga;
         // console.log(this._tipeList);
     });
   }
 
-  get tipes$() { return this._tipes$.asObservable(); }
+  get wargas$() { return this._listWarga$.asObservable(); }
   get total$() { return this._total$.asObservable(); }
   get loading$() { return this._loading$.asObservable(); }
   get page() { return this._state.page; }
@@ -98,14 +102,14 @@ export class ListTipesService {
     const {sortColumn, sortDirection, pageSize, page, searchTerm} = this._state;
 
     // 1. sort
-    let tipes = sort(this._tipeList, sortColumn, sortDirection);
+    let wargas = sort(this._wargaList, sortColumn, sortDirection);
 
     // 2. filter
-    tipes = tipes.filter(tipe => matches(tipe, searchTerm, this.pipe));
-    const total = tipes.length;
+    wargas = wargas.filter(warga => matches(warga, searchTerm, this.pipe));
+    const total = wargas.length;
 
     // 3. paginate
-    tipes = tipes.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
-    return of({tipes, total});
+    wargas = wargas.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
+    return of({wargas, total});
   }
 }

@@ -9,7 +9,7 @@ const routes: Routes = [
         component: TablesWargaComponent
     },
     {
-        path: 'edit',
+        path: ':id',
         component: EditWargaComponent
     }
 ];

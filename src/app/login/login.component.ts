@@ -5,6 +5,7 @@ import { first } from 'rxjs/operators';
 import { AuthService } from '../core/services/auth.service';
 import { TipesService } from '../core/services/tipes.service';
 import { UtilsService } from '../core/services/Utils.service';
+import { WargaService } from '../core/services/warga.service';
 import { routerTransition } from '../router.animations';
 
 @Component({
@@ -18,6 +19,7 @@ export class LoginComponent implements OnInit {
     constructor(private authService: AuthService,
         private tipesService: TipesService,
         private utilsService: UtilsService,
+        private wargaService: WargaService,
         private router: Router) {
             this.loginForm = new FormGroup({
                 username: new FormControl(),
@@ -52,6 +54,7 @@ export class LoginComponent implements OnInit {
                         this.authService.getCurrentUser().pipe(first()).subscribe(
                             (responseUser) => {
                                 if (responseUser) {
+                                    this.wargaService.getDaftarWarga().subscribe();
                                     this.router.navigate(['/warga']);
                                 }
                             }
