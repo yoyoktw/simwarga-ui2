@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
                             (responseUser) => {
                                 if (responseUser) {
                                     this.wargaService.getDaftarWarga().subscribe();
-                                    this.router.navigate(['/warga']);
+                                    this.router.navigate(['/dashboard']);
                                 }
                             }
                         );

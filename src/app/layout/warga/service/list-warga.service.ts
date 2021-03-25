@@ -1,9 +1,9 @@
 import {Injectable, PipeTransform} from '@angular/core';
 
-import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, of, Subject, timer} from 'rxjs';
 
 import {DecimalPipe} from '@angular/common';
-import {debounceTime, delay, switchMap, tap} from 'rxjs/operators';
+import {debounceTime, delay, switchMap, takeUntil, tap} from 'rxjs/operators';
 import {SortColumn, SortDirection} from '../util/warga-sortable.directive';
 import { StorageMap } from '@ngx-pwa/local-storage';
 import { ListWarga } from '../util/list-warga';
@@ -25,11 +25,11 @@ interface State {
 
 const compare = (v1: string | number, v2: string | number) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
 
-function sort(tipes: ListWarga[], column: SortColumn, direction: string): ListWarga[] {
+function sort(wargas: ListWarga[], column: SortColumn, direction: string): ListWarga[] {
   if (direction === '' || column === '') {
-    return tipes;
+    return wargas;
   } else {
-    return [...tipes].sort((a, b) => {
+    return [...wargas].sort((a, b) => {
       const res = compare(a[column], b[column]);
       return direction === 'asc' ? res : -res;
     });
@@ -74,9 +74,9 @@ export class ListWargaService {
 
     this._search$.next();
 
-    this.storage.get(StorageConstants.SETTINGS_WARGA).subscribe((daftarWarga: WargaDto[]) => {
+    this.storage.get(StorageConstants.SETTINGS_WARGA).pipe(takeUntil(timer(5000))).subscribe((daftarWarga: WargaDto[]) => {
         this._wargaList = daftarWarga;
-        // console.log(this._tipeList);
+        console.log(this._wargaList);
     });
   }
 
