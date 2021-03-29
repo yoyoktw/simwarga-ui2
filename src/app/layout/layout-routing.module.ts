@@ -19,6 +19,10 @@ const routes: Routes = [
                 path: 'tipes',
                 loadChildren: () => import('./settings/tipes/tipes.module').then((m) => m.TipesModule)
             },
+            {
+                path: 'utils',
+                loadChildren: () => import('./settings/utils/utils.module').then((m) => m.UtilsModule)
+            },
             { path: 'forms', loadChildren: () => import('./form/form.module').then((m) => m.FormModule) },
             {
                 path: 'bs-element',

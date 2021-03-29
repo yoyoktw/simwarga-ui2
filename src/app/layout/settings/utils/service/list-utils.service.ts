@@ -1,17 +1,16 @@
 import {Injectable, PipeTransform} from '@angular/core';
 
-import {BehaviorSubject, Observable, of, Subject, timer} from 'rxjs';
+import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
 
 import {DecimalPipe} from '@angular/common';
-import {debounceTime, delay, switchMap, takeUntil, tap} from 'rxjs/operators';
-import {SortColumn, SortDirection} from '../util/warga-sortable.directive';
+import {debounceTime, delay, switchMap, tap} from 'rxjs/operators';
 import { StorageMap } from '@ngx-pwa/local-storage';
-import { ListWarga } from '../util/list-warga';
-import { StorageConstants } from '../../../shared/constants/storage.constants';
-import { WargaDto } from '../../../core/dto/warga.dto';
+import { StorageConstants } from '../../../../shared/constants/storage.constants';
+import { ListUtil } from '../util/list-util';
+import { SortColumn, SortDirection } from '../util/utils-sortable.directive';
 
 interface SearchResult {
-  wargas: ListWarga[];
+  utils: ListUtil[];
   total: number;
 }
 
@@ -25,32 +24,30 @@ interface State {
 
 const compare = (v1: string | number, v2: string | number) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
 
-function sort(wargas: ListWarga[], column: SortColumn, direction: string): ListWarga[] {
+function sort(utils: ListUtil[], column: SortColumn, direction: string): ListUtil[] {
   if (direction === '' || column === '') {
-    return wargas;
+    return utils;
   } else {
-    return [...wargas].sort((a, b) => {
+    return [...utils].sort((a, b) => {
       const res = compare(a[column], b[column]);
       return direction === 'asc' ? res : -res;
     });
   }
 }
 
-function matches(warga: ListWarga, term: string, pipe: PipeTransform) {
-    return warga.nik.toLowerCase().includes(term.toLowerCase())
-    || warga.nama.toLowerCase().includes(term.toLowerCase())
-    || pipe.transform(warga.rt).includes(term)
-    || warga.email.toLowerCase().includes(term.toLowerCase());
+function matches(util: ListUtil, term: string, pipe: PipeTransform) {
+    return util.deskripsi.toLowerCase().includes(term.toLowerCase())
+        || pipe.transform(util.tipe).includes(term);
 }
 
 @Injectable({providedIn: 'root'})
-export class ListWargaService {
+export class ListUtilsService {
   private _loading$ = new BehaviorSubject<boolean>(true);
   private _search$ = new Subject<void>();
-  private _listWarga$ = new BehaviorSubject<ListWarga[]>([]);
+  private _utils$ = new BehaviorSubject<ListUtil[]>([]);
   private _total$ = new BehaviorSubject<number>(0);
 
-  private _wargaList;
+  private _utilList;
 
   private _state: State = {
     page: 1,
@@ -68,19 +65,19 @@ export class ListWargaService {
       delay(200),
       tap(() => this._loading$.next(false))
     ).subscribe(result => {
-      this._listWarga$.next(result.wargas);
+      this._utils$.next(result.utils);
       this._total$.next(result.total);
     });
 
     this._search$.next();
 
-    this.storage.get(StorageConstants.SETTINGS_WARGA).pipe(takeUntil(timer(5000))).subscribe((daftarWarga: WargaDto[]) => {
-        this._wargaList = daftarWarga;
-        // console.log(this._wargaList);
+    this.storage.get(StorageConstants.SETTINGS_UTILS).subscribe((utils: ListUtil[]) => {
+        this._utilList = utils;
+        // console.log(this._utilList);
     });
   }
 
-  get wargas$() { return this._listWarga$.asObservable(); }
+  get utils$() { return this._utils$.asObservable(); }
   get total$() { return this._total$.asObservable(); }
   get loading$() { return this._loading$.asObservable(); }
   get page() { return this._state.page; }
@@ -102,14 +99,14 @@ export class ListWargaService {
     const {sortColumn, sortDirection, pageSize, page, searchTerm} = this._state;
 
     // 1. sort
-    let wargas = sort(this._wargaList, sortColumn, sortDirection);
+    let utils = sort(this._utilList, sortColumn, sortDirection);
 
     // 2. filter
-    wargas = wargas.filter(warga => matches(warga, searchTerm, this.pipe));
-    const total = wargas.length;
+    utils = utils.filter(util => matches(util, searchTerm, this.pipe));
+    const total = utils.length;
 
     // 3. paginate
-    wargas = wargas.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
-    return of({wargas, total});
+    utils = utils.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
+    return of({utils, total});
   }
 }
