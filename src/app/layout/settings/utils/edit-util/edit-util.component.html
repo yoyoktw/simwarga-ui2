@@ -1,1 +1,38 @@
-<p>edit-util works!</p>
+<div [@routerTransition]>
+    <app-page-header [heading]="'Edit Util'" [icon]="'fa-table'"></app-page-header>
+</div>
+
+<form [formGroup]="utilForm" (ngSubmit)="onFormSubmit()">
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <button type="submit" class="btn btn-outline-primary mr-2 pull-left" >Simpan</button>
+            <button type="button" class="btn btn-outline-primary mr-2 pull-left" [routerLink]="['/utils']">Daftar Util</button>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="tipeId" class="col-sm-2 col-form-label">Id</label>
+        <div class="col-sm-6">
+          <input type="text" formControlName="utilId" readonly class="form-control-plaintext" id="utilId">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="namaTipe" class="col-sm-2 col-form-label">Deskripsi</label>
+        <div class="col-sm-6">
+          <input type="text" formControlName="deskripsiUtil" [ngClass]="getDeskripsiClass()" id="deskripsiUtil">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="namaTipe" class="col-sm-2 col-form-label">Tipe</label>
+        <div class="col-sm-6">
+            <select [ngClass]="getTipeClass()" formControlName="tipe" required>
+                <option *ngFor="let tipe of tipeList" [ngValue]="tipe">{{ tipe.id + ' - '+ tipe.nama }}</option>
+            </select>
+        </div>
+    </div>
+</form>
+
+<p>
+    <ngb-alert [dismissible]="true" type="{{ alertType }}" *ngIf="!isAlertClosed" (close)="isAlertClosed=true">
+        {{ alertMessage }}
+    </ngb-alert>
+</p>
