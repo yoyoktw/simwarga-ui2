@@ -20,7 +20,7 @@
     <div class="form-group row">
         <label for="namaTipe" class="col-sm-2 col-form-label">Nama tipe</label>
         <div class="col-sm-6">
-          <input type="test" formControlName="namaTipe" class="form-control" id="namaTipe">
+          <input type="text" formControlName="namaTipe" [ngClass]="getDeskripsiClass()" id="namaTipe">
         </div>
     </div>
 </form>

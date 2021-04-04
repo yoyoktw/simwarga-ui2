@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { StorageMap } from '@ngx-pwa/local-storage';
 import { TipeDto } from '../../../../core/dto/tipe.dto';
@@ -19,11 +19,12 @@ export class EditTipeComponent implements OnInit {
     public isAlertClosed: Boolean = true;
     public alertMessage: String = '';
     public alertType: String = 'success';
+    private isDeskripsiValid: Boolean = true;
 
     constructor(private route: ActivatedRoute, private tipesService: TipesService, private storage: StorageMap) {
         this.tipeForm = new FormGroup({
             tipeId: new FormControl(),
-            namaTipe: new FormControl()
+            namaTipe: new FormControl(null, [Validators.required])
         });
     }
 
@@ -49,8 +50,11 @@ export class EditTipeComponent implements OnInit {
     }
 
     onFormSubmit() {
+        this.isDeskripsiValid = true;
         if (this.tipeForm.invalid) {
-            console.log('invalid form');
+            if (this.tipeForm.get('namaTipe').invalid) {
+                this.isDeskripsiValid = false;
+            }
             return;
         }
 
@@ -67,6 +71,7 @@ export class EditTipeComponent implements OnInit {
                     this.tipesService.getTipes().subscribe();
                     this.isAlertClosed = false;
                     this.alertMessage = 'Tipe saved successfully';
+                    this.alertType = 'success';
                 },
                 (error) => {
                     console.log('error saved tipe');
@@ -77,4 +82,7 @@ export class EditTipeComponent implements OnInit {
             );
     }
 
+    public getDeskripsiClass() {
+        return this.isDeskripsiValid ? 'form-control' : 'form-control is-invalid';
+    }
 }
