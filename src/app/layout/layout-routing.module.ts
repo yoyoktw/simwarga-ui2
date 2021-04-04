@@ -16,6 +16,10 @@ const routes: Routes = [
                 loadChildren: () => import('./warga/warga.module').then((m) => m.WargaModule)
             },
             {
+                path: 'propinsi',
+                loadChildren: () => import('./master/propinsi/propinsi.module').then((m) => m.PropinsiModule)
+            },
+            {
                 path: 'tipes',
                 loadChildren: () => import('./settings/tipes/tipes.module').then((m) => m.TipesModule)
             },

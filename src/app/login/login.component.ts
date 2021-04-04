@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { AuthService } from '../core/services/auth.service';
+import { PropinsiService } from '../core/services/propinsi.service';
 import { TipesService } from '../core/services/tipes.service';
 import { UtilsService } from '../core/services/Utils.service';
 import { WargaService } from '../core/services/warga.service';
@@ -20,6 +21,7 @@ export class LoginComponent implements OnInit {
         private tipesService: TipesService,
         private utilsService: UtilsService,
         private wargaService: WargaService,
+        private propinsiService: PropinsiService,
         private router: Router) {
             this.loginForm = new FormGroup({
                 username: new FormControl(),
@@ -55,6 +57,7 @@ export class LoginComponent implements OnInit {
                             (responseUser) => {
                                 if (responseUser) {
                                     this.wargaService.getDaftarWarga().subscribe();
+                                    this.propinsiService.getListPropinsi().subscribe();
                                     this.router.navigate(['/dashboard']);
                                 }
                             }
