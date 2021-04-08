@@ -20,6 +20,10 @@ const routes: Routes = [
                 loadChildren: () => import('./master/propinsi/propinsi.module').then((m) => m.PropinsiModule)
             },
             {
+                path: 'kabkota',
+                loadChildren: () => import('./master/kabkota/kabkota.module').then((m) => m.KabkotaModule)
+            },
+            {
                 path: 'tipes',
                 loadChildren: () => import('./settings/tipes/tipes.module').then((m) => m.TipesModule)
             },
