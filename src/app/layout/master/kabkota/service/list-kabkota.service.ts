@@ -36,7 +36,10 @@ function sort(itemList: ListKabkota[], column: SortColumn, direction: string): L
 }
 
 function matches(itemList: ListKabkota, term: string, pipe: PipeTransform) {
-    return itemList.nama.toLowerCase().includes(term.toLowerCase());
+    return itemList.nama.toLowerCase().includes(term.toLowerCase())
+    || itemList.tipe.toLowerCase().includes(term.toLowerCase())
+    || itemList.deskripsi.toLowerCase().includes(term.toLowerCase())
+    || pipe.transform(itemList.propinsi).includes(term);
 }
 
 @Injectable({providedIn: 'root'})
