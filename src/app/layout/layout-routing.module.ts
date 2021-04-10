@@ -24,6 +24,10 @@ const routes: Routes = [
                 loadChildren: () => import('./master/kabkota/kabkota.module').then((m) => m.KabkotaModule)
             },
             {
+                path: 'desa',
+                loadChildren: () => import('./master/desa/desa.module').then((m) => m.DesaModule)
+            },
+            {
                 path: 'kecamatan',
                 loadChildren: () => import('./master/kecamatan/kecamatan.module').then((m) => m.KecamatanModule)
             },
