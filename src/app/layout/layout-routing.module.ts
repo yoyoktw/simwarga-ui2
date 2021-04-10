@@ -24,6 +24,10 @@ const routes: Routes = [
                 loadChildren: () => import('./master/kabkota/kabkota.module').then((m) => m.KabkotaModule)
             },
             {
+                path: 'kecamatan',
+                loadChildren: () => import('./master/kecamatan/kecamatan.module').then((m) => m.KecamatanModule)
+            },
+            {
                 path: 'tipes',
                 loadChildren: () => import('./settings/tipes/tipes.module').then((m) => m.TipesModule)
             },
