@@ -1,20 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ListKecamatanComponent } from './list-kecamatan.component';
 
-import { ListPropinsiComponent } from './list-propinsi.component';
-
-describe('ListPropinsiComponent', () => {
-  let component: ListPropinsiComponent;
-  let fixture: ComponentFixture<ListPropinsiComponent>;
+describe('ListKecamatanComponent', () => {
+  let component: ListKecamatanComponent;
+  let fixture: ComponentFixture<ListKecamatanComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ListPropinsiComponent ]
+      declarations: [ ListKecamatanComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ListPropinsiComponent);
+    fixture = TestBed.createComponent(ListKecamatanComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
