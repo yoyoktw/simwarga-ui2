@@ -1,20 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ListDesaComponent } from './list-desa.component';
 
-import { ListPropinsiComponent } from './list-propinsi.component';
-
-describe('ListPropinsiComponent', () => {
-  let component: ListPropinsiComponent;
-  let fixture: ComponentFixture<ListPropinsiComponent>;
+describe('ListDesaComponent', () => {
+  let component: ListDesaComponent;
+  let fixture: ComponentFixture<ListDesaComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ListPropinsiComponent ]
+      declarations: [ ListDesaComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ListPropinsiComponent);
+    fixture = TestBed.createComponent(ListDesaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
