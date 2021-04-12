@@ -20,6 +20,7 @@ export class EditTipeComponent implements OnInit {
     public alertMessage: String = '';
     public alertType: String = 'success';
     private isDeskripsiValid: Boolean = true;
+    private editHeader: String;
 
     constructor(private route: ActivatedRoute, private tipesService: TipesService, private storage: StorageMap) {
         this.tipeForm = new FormGroup({
@@ -35,6 +36,7 @@ export class EditTipeComponent implements OnInit {
                 tipeId: 'New',
                 namaTipe: ''
             });
+            this.editHeader = 'Buat Tipe Baru';
         } else {
             this.storage.get(StorageConstants.SETTINGS_TIPES).subscribe((tipeList: TipeDto[])  => {
                 if (tipeList) {
@@ -43,6 +45,7 @@ export class EditTipeComponent implements OnInit {
                             tipeId: tipe.id.toString(),
                             namaTipe: tipe.nama
                         });
+                        this.editHeader = 'Edit Tipe';
                     });
                 }
             });
@@ -84,5 +87,9 @@ export class EditTipeComponent implements OnInit {
 
     public getDeskripsiClass() {
         return this.isDeskripsiValid ? 'form-control' : 'form-control is-invalid';
+    }
+
+    public getHeaderTitle() {
+        return this.editHeader;
     }
 }

@@ -26,6 +26,7 @@ export class EditUtilComponent implements OnInit {
 
     private isDeskripsiValid: Boolean = true;
     private isTipeValid: Boolean = true;
+    private editHeader: String;
 
   constructor(private route: ActivatedRoute, private utilsService: UtilsService, private storage: StorageMap) {
     this.utilForm = new FormGroup({
@@ -50,6 +51,7 @@ export class EditUtilComponent implements OnInit {
             deskripsiUtil: '',
             tipe: ''
         });
+        this.editHeader = 'Buat Util Baru';
     } else {
         this.storage.get(StorageConstants.SETTINGS_UTILS).subscribe((utilList: UtilDto[])  => {
             if (utilList) {
@@ -59,6 +61,7 @@ export class EditUtilComponent implements OnInit {
                         deskripsiUtil: util.deskripsi,
                         tipe: this.getTipeById(util.tipe)
                     });
+                    this.editHeader = 'Edit Util';
                 });
             }
         });
@@ -115,4 +118,9 @@ export class EditUtilComponent implements OnInit {
   public getTipeClass() {
     return this.isTipeValid ? 'form-control' : 'form-control is-invalid';
   }
+
+  public getHeaderTitle() {
+    return this.editHeader;
+  }
+
 }
