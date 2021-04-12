@@ -1,4 +1,4 @@
-export class RTDto {
+export interface ListRT {
     id: number;
     nama: string;
     rw: number;

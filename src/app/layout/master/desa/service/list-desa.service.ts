@@ -97,15 +97,17 @@ export class ListDesaService {
   private _search(): Observable<SearchResult> {
     const {sortColumn, sortDirection, pageSize, page, searchTerm} = this._state;
 
-    // 1. sort
-    let itemList = sort(this._items, sortColumn, sortDirection);
+    if (this._items) {
+        // 1. sort
+        let itemList = sort(this._items, sortColumn, sortDirection);
 
-    // 2. filter
-    itemList = itemList.filter(item => matches(item, searchTerm, this.pipe));
-    const total = itemList.length;
+        // 2. filter
+        itemList = itemList.filter(item => matches(item, searchTerm, this.pipe));
+        const total = itemList.length;
 
-    // 3. paginate
-    itemList = itemList.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
-    return of({itemList, total});
+        // 3. paginate
+        itemList = itemList.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
+        return of({itemList, total});
+    }
   }
 }

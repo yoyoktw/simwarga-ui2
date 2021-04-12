@@ -1,5 +1,5 @@
 <div [@routerTransition]>
-    <app-page-header [heading]="'Daftar Desa'" [icon]="'fa-table'"></app-page-header>
+    <app-page-header [heading]="'Daftar Rukun Warga'" [icon]="'fa-table'"></app-page-header>
 
     <!-- <button class="btn btn-outline-primary mr-2 pull-right" [routerLink]="['/propinsi', 0]">Create New Tipe</button> -->
     <form>
@@ -13,16 +13,16 @@
           <tr>
             <th scope="col">#</th>
             <th scope="col" sortable="nama" (sort)="onSort($event)">Nama</th>
-            <th scope="col" sortable="kecamatan" (sort)="onSort($event)">Kecamatan</th>
+            <th scope="col" sortable="desa" (sort)="onSort($event)">Desa</th>
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let desa of itemList$ | async">
-            <th scope="row">{{ desa.id }}</th>
+          <tr *ngFor="let rw of itemList$ | async">
+            <th scope="row">{{ rw.id }}</th>
             <td>
-              <ngb-highlight [result]="desa.nama" [term]="service.searchTerm"></ngb-highlight>
+              <ngb-highlight [result]="rw.nama" [term]="service.searchTerm"></ngb-highlight>
             </td>
-            <td><ngb-highlight [result]="desa.kecamatan | number" [term]="service.searchTerm"></ngb-highlight></td>
+            <td><ngb-highlight [result]="rw.desa | number" [term]="service.searchTerm"></ngb-highlight></td>
           </tr>
           </tbody>
         </table>

@@ -32,6 +32,14 @@ const routes: Routes = [
                 loadChildren: () => import('./master/kecamatan/kecamatan.module').then((m) => m.KecamatanModule)
             },
             {
+                path: 'rw',
+                loadChildren: () => import('./master/rw/rw.module').then((m) => m.RWModule)
+            },
+            {
+                path: 'rt',
+                loadChildren: () => import('./master/rt/rt.module').then((m) => m.RTModule)
+            },
+            {
                 path: 'tipes',
                 loadChildren: () => import('./settings/tipes/tipes.module').then((m) => m.TipesModule)
             },

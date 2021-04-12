@@ -6,11 +6,11 @@ import {DecimalPipe} from '@angular/common';
 import {debounceTime, delay, switchMap, tap} from 'rxjs/operators';
 import { StorageMap } from '@ngx-pwa/local-storage';
 import { StorageConstants } from '../../../../shared/constants/storage.constants';
-import { SortColumn, SortDirection } from '../util/propinsi-sortable.directive';
-import { ListPropinsi } from '../util/list-propinsi';
+import { ListRT } from '../util/list-rt';
+import { SortColumn, SortDirection } from '../util/rt-sortable.directive';
 
 interface SearchResult {
-  propinsis: ListPropinsi[];
+  itemList: ListRT[];
   total: number;
 }
 
@@ -24,29 +24,34 @@ interface State {
 
 const compare = (v1: string | number, v2: string | number) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
 
-function sort(propinsis: ListPropinsi[], column: SortColumn, direction: string): ListPropinsi[] {
+function sort(itemList: ListRT[], column: SortColumn, direction: string): ListRT[] {
   if (direction === '' || column === '') {
-    return propinsis;
+    return itemList;
   } else {
-    return [...propinsis].sort((a, b) => {
+    return [...itemList].sort((a, b) => {
       const res = compare(a[column], b[column]);
       return direction === 'asc' ? res : -res;
     });
   }
 }
 
-function matches(propinsis: ListPropinsi, term: string, pipe: PipeTransform) {
-    return propinsis.nama.toLowerCase().includes(term.toLowerCase());
+function matches(itemList: ListRT, term: string, pipe: PipeTransform) {
+    return itemList.nama.toLowerCase().includes(term.toLowerCase())
+    || pipe.transform(itemList.rw).includes(term)
+    || pipe.transform(itemList.desa).includes(term)
+    || pipe.transform(itemList.kecamatan).includes(term)
+    || pipe.transform(itemList.kabkota).includes(term)
+    || pipe.transform(itemList.propinsi).includes(term);
 }
 
 @Injectable({providedIn: 'root'})
-export class ListPropinsiService {
+export class ListRTService {
   private _loading$ = new BehaviorSubject<boolean>(true);
   private _search$ = new Subject<void>();
-  private _propinsis$ = new BehaviorSubject<ListPropinsi[]>([]);
+  private _itemList$ = new BehaviorSubject<ListRT[]>([]);
   private _total$ = new BehaviorSubject<number>(0);
 
-  private _propinsiList;
+  private _items;
 
   private _state: State = {
     page: 1,
@@ -64,19 +69,19 @@ export class ListPropinsiService {
       delay(200),
       tap(() => this._loading$.next(false))
     ).subscribe(result => {
-      this._propinsis$.next(result.propinsis);
+      this._itemList$.next(result.itemList);
       this._total$.next(result.total);
     });
 
     this._search$.next();
 
-    this.storage.get(StorageConstants.SETTINGS_PROPINSI).subscribe((propinsis: ListPropinsi[]) => {
-        this._propinsiList = propinsis;
+    this.storage.get(StorageConstants.SETTINGS_RT).subscribe((listRT: ListRT[]) => {
+        this._items = listRT;
         // console.log(this._tipeList);
     });
   }
 
-  get propinsis$() { return this._propinsis$.asObservable(); }
+  get itemList$() { return this._itemList$.asObservable(); }
   get total$() { return this._total$.asObservable(); }
   get loading$() { return this._loading$.asObservable(); }
   get page() { return this._state.page; }
@@ -97,17 +102,17 @@ export class ListPropinsiService {
   private _search(): Observable<SearchResult> {
     const {sortColumn, sortDirection, pageSize, page, searchTerm} = this._state;
 
-    if (this._propinsiList) {
-    // 1. sort
-    let propinsis = sort(this._propinsiList, sortColumn, sortDirection);
+    if (this._items) {
+        // 1. sort
+        let itemList = sort(this._items, sortColumn, sortDirection);
 
-    // 2. filter
-    propinsis = propinsis.filter(propinsi => matches(propinsi, searchTerm, this.pipe));
-    const total = propinsis.length;
+        // 2. filter
+        itemList = itemList.filter(item => matches(item, searchTerm, this.pipe));
+        const total = itemList.length;
 
-    // 3. paginate
-    propinsis = propinsis.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
-    return of({propinsis, total});
+        // 3. paginate
+        itemList = itemList.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
+        return of({itemList, total});
     }
   }
 }
