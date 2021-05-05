@@ -92,22 +92,22 @@ export class EditUtilComponent implements OnInit {
     };
 
     this.utilsService
-    .save(utilData)
-    .pipe(first())
-    .subscribe(
-        (response) => {
-            this.utilsService.getUtils().subscribe();
-            this.isAlertClosed = false;
-            this.alertMessage = 'Util saved successfully';
-            this.alertType = 'success';
-        },
-        (error) => {
-            console.log('error saved util');
-            this.isAlertClosed = false;
-            this.alertMessage = 'Error saved util';
-            this.alertType = 'danger';
-        }
-    );
+        .save(utilData)
+        .pipe(first())
+        .subscribe(
+            (response) => {
+                this.utilsService.getUtils().subscribe();
+                this.isAlertClosed = false;
+                this.alertMessage = 'Util saved successfully';
+                this.alertType = 'success';
+            },
+            (error) => {
+                console.log('error saved util');
+                this.isAlertClosed = false;
+                this.alertMessage = 'Error saved util';
+                this.alertType = 'danger';
+            }
+        );
 
   }
 

@@ -16,13 +16,13 @@
         </div>
     </div>
     <div class="form-group row">
-        <label for="namaTipe" class="col-sm-2 col-form-label">Deskripsi</label>
+        <label for="deskripsiUtil" class="col-sm-2 col-form-label">Deskripsi</label>
         <div class="col-sm-6">
           <input type="text" formControlName="deskripsiUtil" [ngClass]="getDeskripsiClass()" id="deskripsiUtil">
         </div>
     </div>
     <div class="form-group row">
-        <label for="namaTipe" class="col-sm-2 col-form-label">Tipe</label>
+        <label for="tipe" class="col-sm-2 col-form-label">Tipe</label>
         <div class="col-sm-6">
             <select [ngClass]="getTipeClass()" formControlName="tipe" required>
                 <option *ngFor="let tipe of tipeList" [ngValue]="tipe">{{ tipe.id + ' - '+ tipe.nama }}</option>

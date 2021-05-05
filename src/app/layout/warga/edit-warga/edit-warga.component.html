@@ -1,6 +1,314 @@
 <div [@routerTransition]>
-    <app-page-header [heading]="'Edit Warga'" [icon]="'fa-table'"></app-page-header>
-    <div class="row">
+    <app-page-header [heading]="getHeaderTitle()" [icon]="'fa-table'"></app-page-header>
 
-    </div>
+    <p>
+        <ngb-alert [dismissible]="true" type="{{ alertType }}" *ngIf="!isAlertClosed" (close)="isAlertClosed=true">
+            {{ alertMessage }}
+        </ngb-alert>
+    </p>
+
+    <form [formGroup]="wargaForm" (ngSubmit)="onFormSubmit()">
+
+        <div class="form-group row">
+            <div class="col-sm-6">
+                <button type="submit" class="btn btn-outline-primary mr-2 pull-left" >Simpan</button>
+                <button type="button" class="btn btn-outline-primary mr-2 pull-left" [routerLink]="['/warga']">Daftar Warga</button>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="nomorKK" class="col-sm-2 col-form-label">No. KK</label>
+            <div class="col-sm-10">
+            <input type="text" formControlName="nomorKK" [ngClass]="getValidClass('nomorKK')" id="nomorKK" required>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="nik" class="col-sm-2 col-form-label">Nik</label>
+            <div class="col-sm-10">
+            <input type="text" formControlName="nik" [ngClass]="getValidClass('nik')" id="nik" required>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="nama" class="col-sm-2 col-form-label">Nama</label>
+            <div class="col-sm-10">
+            <input type="text" formControlName="nama" [ngClass]="getValidClass('nama')" id="nama" required>
+            </div>
+        </div>
+
+        <nav ngbNav #nav="ngbNav" class="nav-tabs">
+            <ng-container ngbNavItem>
+              <a ngbNavLink>Personal</a>
+                <ng-template ngbNavContent>
+                    <!-- <div class="form-group row">
+                        <label for="tipeId" class="col-sm-2 col-form-label">Id</label>
+                        <div class="col-sm-6">
+                        <input type="text" formControlName="wargaId" readonly class="form-control-plaintext" id="wargaId">
+                        </div>
+                    </div> -->
+
+                    <div class="form-group row">
+                        <label for="jenisKelamin" class="col-sm-2 col-form-label">Jenis Kelamin</label>
+                        <div class="col-sm-3">
+                            <select formControlName="jenisKelamin" [ngClass]="getValidClass('jenisKelamin')" required>
+                                <option *ngFor="let sex of jenisKelaminList" [ngValue]="sex">{{ sex.deskripsi }}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="tempatLahir" class="col-sm-2 col-form-label">Tempat Lahir</label>
+                        <div class="col-sm-5">
+                        <input type="text" formControlName="tempatLahir" [ngClass]="getValidClass('tempatLahir')" id="tempatLahir" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="tanggalLahir" class="col-sm-2 col-form-label">Tanggal Lahir</label>
+                        <div class="col-sm-2">
+                            <div class="input-group datepicker-input">
+                                <input
+                                    #d="ngbDatepicker"
+                                    formControlName="tanggalLahir"
+                                    name="tanggalLahir"
+                                    ngbDatepicker
+                                    placeholder="yyyy-mm-dd"
+                                    [ngClass]="getValidClass('tanggalLahir')"
+                                    required
+                                />
+                                <button (click)="d.toggle()" class="input-group-addon" type="button">
+                                    <span class="fa fa-calendar"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="agama" class="col-sm-2 col-form-label">Agama</label>
+                        <div class="col-sm-3">
+                            <select [ngClass]="getValidClass('agama')" formControlName="agama" required>
+                                <option *ngFor="let agama of agamaList" [ngValue]="agama">{{ agama.deskripsi }}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="kewarganegaraan" class="col-sm-2 col-form-label">Kewarganegaraan</label>
+                        <div class="col-sm-3">
+                            <select [ngClass]="getValidClass('kewarganegaraan')" formControlName="kewarganegaraan" required>
+                                <option *ngFor="let warganegara of kewarganegaraanList" [ngValue]="warganegara">{{ warganegara.deskripsi }}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="alamatTinggal" class="col-sm-2 col-form-label">Alamat Tinggal</label>
+                        <div class="col-sm-10">
+                        <input type="text" formControlName="alamatTinggal" [ngClass]="getValidClass('alamatTinggal')" id="alamatTinggal" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="alamatKTP" class="col-sm-2 col-form-label">Alamat KTP</label>
+                        <div class="col-sm-10">
+                        <input type="text" formControlName="alamatKTP" [ngClass]="getValidClass('alamatKTP')" id="alamatKTP" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="asalKTP" class="col-sm-2 col-form-label">KTP Asal</label>
+                        <div class="col-sm-10">
+                        <input type="text" formControlName="asalKTP" [ngClass]="getValidClass('asalKTP')" id="asalKTP">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="statusWarga" class="col-sm-2 col-form-label">Status Warga</label>
+                        <div class="col-sm-3">
+                            <select [ngClass]="getValidClass('statusWarga')" formControlName="statusWarga" required>
+                                <option *ngFor="let statuswarga of statusWargaList" [ngValue]="statuswarga">{{ statuswarga.deskripsi }}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </ng-template>
+            </ng-container>
+            <ng-container ngbNavItem>
+                <a ngbNavLink>Pendidikan & Pekerjaan</a>
+                <ng-template ngbNavContent>
+
+                    <div class="form-group row">
+                        <label for="pendidikan" class="col-sm-2 col-form-label">Pendidikan</label>
+                        <div class="col-sm-4">
+                            <select [ngClass]="getValidClass('pendidikan')" formControlName="pendidikan" required>
+                                <option *ngFor="let pendidikan of pendidikanList" [ngValue]="pendidikan">{{ pendidikan.deskripsi }}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="jenisPekerjaan" class="col-sm-2 col-form-label">Jenis Pekerjaan</label>
+                        <div class="col-sm-5">
+                            <select [ngClass]="getValidClass('jenisPekerjaan')" formControlName="jenisPekerjaan" required>
+                                <option *ngFor="let pekerjaan of pekerjaanList" [ngValue]="pekerjaan">{{ pekerjaan.deskripsi }}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </ng-template>
+            </ng-container>
+
+            <ng-container ngbNavItem>
+                <a ngbNavLink>Keluarga</a>
+                <ng-template ngbNavContent>
+                    <div class="form-group row">
+                        <label for="statusPerkawinan" class="col-sm-2 col-form-label">Status Perkawinan</label>
+                        <div class="col-sm-4">
+                            <select [ngClass]="getValidClass('statusPerkawinan')" formControlName="statusPerkawinan" required>
+                                <option *ngFor="let statusnikah of statusPerkawinanList" [ngValue]="statusnikah">{{ statusnikah.deskripsi }}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="hubunganKeluarga" class="col-sm-2 col-form-label">Hubungan Keluarga</label>
+                        <div class="col-sm-4">
+                            <select [ngClass]="getValidClass('hubunganKeluarga')" formControlName="hubunganKeluarga" required>
+                                <option *ngFor="let hubkeluarga of hubKeluargaList" [ngValue]="hubkeluarga">{{ hubkeluarga.deskripsi }}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </ng-template>
+            </ng-container>
+
+            <ng-container ngbNavItem>
+                <a ngbNavLink>Kontak</a>
+                <ng-template ngbNavContent>
+                    <div class="form-group row">
+                        <label for="email" class="col-sm-2 col-form-label">Email</label>
+                        <div class="col-sm-4">
+                        <input type="text" formControlName="email" [ngClass]="getValidClass('email')" id="email" required email>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="noHP" class="col-sm-2 col-form-label">No. HP</label>
+                        <div class="col-sm-4">
+                        <input type="text" formControlName="noHP" [ngClass]="getValidClass('noHP')" id="noHP">
+                        </div>
+                    </div>
+
+                </ng-template>
+            </ng-container>
+
+            <ng-container ngbNavItem>
+                <a ngbNavLink>Medis</a>
+                <ng-template ngbNavContent>
+                    <div class="form-group row">
+                        <label for="golDarah" class="col-sm-2 col-form-label">Gol. Darah</label>
+                        <div class="col-sm-3">
+                            <select [ngClass]="getValidClass('golDarah')" formControlName="golDarah">
+                                <option *ngFor="let darah of golDarahList" [ngValue]="darah">{{ darah.deskripsi }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">Covid-19</div>
+                        <div class="card-body">
+
+                            <div class="form-group row">
+                                <label for="pernahCovid" class="col-sm-2 col-form-label">Pernah Covid ?</label>
+                                <div class="col-sm-3">
+                                    <select [ngClass]="getValidClass('pernahCovid')" formControlName="pernahCovid">
+                                        <option *ngFor="let pernahcovid of pernahCovidList" [ngValue]="pernahcovid">{{ pernahcovid.deskripsi }}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="vaksinCovidKe1" class="col-sm-2 col-form-label">Vaksin ke-1</label>
+                                <div class="col-sm-2">
+                                    <div class="input-group datepicker-input">
+                                        <input
+                                            #dv1="ngbDatepicker"
+                                            formControlName="vaksinCovidKe1"
+                                            class="form-control"
+                                            name="vaksinCovidKe1"
+                                            ngbDatepicker
+                                            placeholder="yyyy-mm-dd"
+                                            placement="top"
+                                        />
+                                        <button (click)="dv1.toggle()" class="input-group-addon" type="button">
+                                            <span class="fa fa-calendar"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="vaksinCovidKe2" class="col-sm-2 col-form-label">Vaksin ke-2</label>
+                                <div class="col-sm-2">
+                                    <div class="input-group datepicker-input">
+                                        <input
+                                            #dv2="ngbDatepicker"
+                                            formControlName="vaksinCovidKe2"
+                                            class="form-control"
+                                            name="vaksinCovidKe2"
+                                            ngbDatepicker
+                                            placeholder="yyyy-mm-dd"
+                                            placement="top"
+                                        />
+                                        <button (click)="dv2.toggle()" class="input-group-addon" type="button">
+                                            <span class="fa fa-calendar"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="vaksinCovidKe3" class="col-sm-2 col-form-label">Vaksin ke-3</label>
+                                <div class="col-sm-2">
+                                    <div class="input-group datepicker-input">
+                                        <input
+                                            #dv3="ngbDatepicker"
+                                            formControlName="vaksinCovidKe3"
+                                            class="form-control"
+                                            name="vaksinCovidKe3"
+                                            ngbDatepicker
+                                            placeholder="yyyy-mm-dd"
+                                            placement="top"
+                                        />
+                                        <button (click)="dv3.toggle()" class="input-group-addon" type="button">
+                                            <span class="fa fa-calendar"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </ng-template>
+            </ng-container>
+
+            <ng-container ngbNavItem>
+              <a ngbNavLink>Catatan</a>
+              <ng-template ngbNavContent>
+
+                <div class="form-group row">
+                    <label for="keterangan" class="col-sm-2 col-form-label">Catatan</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" rows="5" formControlName="keterangan" id="keterangan"></textarea>
+                    </div>
+                </div>
+
+              </ng-template>
+            </ng-container>
+          </nav>
+          <div [ngbNavOutlet]="nav" class="mt-2"></div>
+    </form>
+
 </div>

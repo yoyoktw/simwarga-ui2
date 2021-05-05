@@ -23,4 +23,29 @@ export class WargaService {
                 })
             );
     }
+
+    public save(wargaData: WargaDto) {
+        if (wargaData) {
+            if (wargaData.id) {
+                // Update
+                return this.http
+                    .put<any>(`${environment.apiServiceUrl}warga`, wargaData)
+                    .pipe(
+                        map((warga: WargaDto) => {
+                            return warga;
+                        })
+                    );
+            } else {
+                // New
+                return this.http
+                    .post<any>(`${environment.apiServiceUrl}warga`, wargaData)
+                    .pipe(
+                        map((warga: WargaDto) => {
+                            return warga;
+                        })
+                    );
+            }
+        }
+    }
+
 }

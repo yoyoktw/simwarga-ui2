@@ -13,6 +13,7 @@
           <tr>
             <th scope="col">Nik</th>
             <th scope="col" sortable="nama" (sort)="onSort($event)">Nama</th>
+            <th scope="col" sortable="alamatTinggal" (sort)="onSort($event)">Alamat</th>
             <th scope="col" sortable="rt" (sort)="onSort($event)">RT</th>
             <th scope="col" sortable="email" (sort)="onSort($event)">Email</th>
             <th scope="col">Action</th>
@@ -25,8 +26,10 @@
                 <ngb-highlight [result]="warga.nik" [term]="service.searchTerm"></ngb-highlight>
             </td>
             <td>
-              <!-- <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag" class="mr-2" style="width: 20px"> -->
-              <ngb-highlight [result]="warga.nama" [term]="service.searchTerm"></ngb-highlight>
+                <ngb-highlight [result]="warga.nama" [term]="service.searchTerm"></ngb-highlight>
+            </td>
+            <td>
+                <ngb-highlight [result]="warga.alamatTinggal" [term]="service.searchTerm"></ngb-highlight>
             </td>
             <td>
                 <ngb-highlight [result]="warga.rt | number" [term]="service.searchTerm"></ngb-highlight>

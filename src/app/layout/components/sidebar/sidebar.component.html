@@ -8,10 +8,10 @@
             <i class="fa fa-fw fa-table"></i>&nbsp;
             <span>{{ 'Warga' | translate }}</span>
         </a>
-        <a [routerLinkActive]="['router-link-active']" [routerLink]="['/forms']" class="list-group-item">
+        <!-- <a [routerLinkActive]="['router-link-active']" [routerLink]="['/forms']" class="list-group-item">
             <i class="fa fa-fw fa-table"></i>&nbsp;
             <span>{{ 'Kartu Keluarga' | translate }}</span>
-        </a>
+        </a> -->
         <!-- <a [routerLinkActive]="['router-link-active']" [routerLink]="['/report']" class="list-group-item">
             <i class="fa fa-fw fa-bar-chart-o"></i>&nbsp;
             <span>{{ 'Reports' | translate }}</span>
@@ -58,6 +58,12 @@
                 </ul>
             </li>
         </div> -->
+
+        <a [routerLinkActive]="['router-link-active']" [routerLink]="['/forms']" class="list-group-item">
+            <i class="fa fa-fw fa-table"></i>&nbsp;
+            <span>{{ 'Users' | translate }}</span>
+        </a>
+
         <div class="nested-menu">
             <a (click)="addExpandClass('masters')" class="list-group-item">
                 <i class="fa fa-th-list"></i>&nbsp;

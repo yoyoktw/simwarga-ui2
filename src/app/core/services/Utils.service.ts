@@ -19,6 +19,97 @@ export class UtilsService {
                     if (utils) {
                         // tslint:disable-next-line: deprecation
                         this.storage.set(StorageConstants.SETTINGS_UTILS, utils).subscribe(() => {});
+
+                        this.storage.get(StorageConstants.SETTINGS_TIPEID_JENISKELAMIN).subscribe(jenisKelaminId  => {
+                            if (jenisKelaminId) {
+                                const jenisKelaminList = utils.filter(util => util.tipe === jenisKelaminId);
+                                if (jenisKelaminList) {
+                                    this.storage.set(StorageConstants.SETTINGS_UTILS_JENISKELAMIN, jenisKelaminList)
+                                    .subscribe(() => {});
+                                }
+                            }
+                        });
+                        this.storage.get(StorageConstants.SETTINGS_TIPEID_AGAMA).subscribe(agamaId  => {
+                            if (agamaId) {
+                                const agamaList = utils.filter(util => util.tipe === agamaId);
+                                if (agamaList) {
+                                    this.storage.set(StorageConstants.SETTINGS_UTILS_AGAMA, agamaList)
+                                    .subscribe(() => {});
+                                }
+                            }
+                        });
+                        this.storage.get(StorageConstants.SETTINGS_TIPEID_KEWARGANEGARAAN).subscribe(kewarganegaraanId  => {
+                            if (kewarganegaraanId) {
+                                const kewarganegaraanList = utils.filter(util => util.tipe === kewarganegaraanId);
+                                if (kewarganegaraanList) {
+                                    this.storage.set(StorageConstants.SETTINGS_UTILS_KEWARGANEGARAAN, kewarganegaraanList)
+                                    .subscribe(() => {});
+                                }
+                            }
+                        });
+                        this.storage.get(StorageConstants.SETTINGS_TIPEID_STATUSWARGA).subscribe(statusWargaId  => {
+                            if (statusWargaId) {
+                                const statusWargaList = utils.filter(util => util.tipe === statusWargaId);
+                                if (statusWargaList) {
+                                    this.storage.set(StorageConstants.SETTINGS_UTILS_STATUSWARGA, statusWargaList)
+                                    .subscribe(() => {});
+                                }
+                            }
+                        });
+                        this.storage.get(StorageConstants.SETTINGS_TIPEID_PENDIDIKAN).subscribe(pendidikanId  => {
+                            if (pendidikanId) {
+                                const pendidikanList = utils.filter(util => util.tipe === pendidikanId);
+                                if (pendidikanList) {
+                                    this.storage.set(StorageConstants.SETTINGS_UTILS_PENDIDIKAN, pendidikanList)
+                                    .subscribe(() => {});
+                                }
+                            }
+                        });
+                        this.storage.get(StorageConstants.SETTINGS_TIPEID_PEKERJAAN).subscribe(pekerjaanId  => {
+                            if (pekerjaanId) {
+                                const pekerjaanList = utils.filter(util => util.tipe === pekerjaanId);
+                                if (pekerjaanList) {
+                                    this.storage.set(StorageConstants.SETTINGS_UTILS_PEKERJAAN, pekerjaanList)
+                                    .subscribe(() => {});
+                                }
+                            }
+                        });
+                        this.storage.get(StorageConstants.SETTINGS_TIPEID_STATUSPERKAWINAN).subscribe(statusPerkawinanId  => {
+                            if (statusPerkawinanId) {
+                                const statusPerkawinanList = utils.filter(util => util.tipe === statusPerkawinanId);
+                                if (statusPerkawinanList) {
+                                    this.storage.set(StorageConstants.SETTINGS_UTILS_STATUSPERKAWINAN, statusPerkawinanList)
+                                    .subscribe(() => {});
+                                }
+                            }
+                        });
+                        this.storage.get(StorageConstants.SETTINGS_TIPEID_HUB_KELUARGA).subscribe(hubKeluargaId  => {
+                            if (hubKeluargaId) {
+                                const hubKeluargaList = utils.filter(util => util.tipe === hubKeluargaId);
+                                if (hubKeluargaList) {
+                                    this.storage.set(StorageConstants.SETTINGS_UTILS_HUB_KELUARGA, hubKeluargaList)
+                                    .subscribe(() => {});
+                                }
+                            }
+                        });
+                        this.storage.get(StorageConstants.SETTINGS_TIPEID_GOL_DARAH).subscribe(golDarahId  => {
+                            if (golDarahId) {
+                                const golDarahList = utils.filter(util => util.tipe === golDarahId);
+                                if (golDarahList) {
+                                    this.storage.set(StorageConstants.SETTINGS_UTILS_GOL_DARAH, golDarahList)
+                                    .subscribe(() => {});
+                                }
+                            }
+                        });
+                        this.storage.get(StorageConstants.SETTINGS_TIPEID_PERNAH_COVID).subscribe(pernahCovidId  => {
+                            if (pernahCovidId) {
+                                const pernahCovidList = utils.filter(util => util.tipe === pernahCovidId);
+                                if (pernahCovidList) {
+                                    this.storage.set(StorageConstants.SETTINGS_UTILS_PERNAH_COVID, pernahCovidList)
+                                    .subscribe(() => {});
+                                }
+                            }
+                        });
                     }
                     return utils;
                 })
