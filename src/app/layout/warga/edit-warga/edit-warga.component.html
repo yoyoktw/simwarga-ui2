@@ -17,16 +17,16 @@
         </div>
 
         <div class="form-group row">
-            <label for="nomorKK" class="col-sm-2 col-form-label">No. KK</label>
+            <label for="nik" class="col-sm-2 col-form-label">Nik</label>
             <div class="col-sm-10">
-            <input type="text" formControlName="nomorKK" [ngClass]="getValidClass('nomorKK')" id="nomorKK" required>
+            <input type="text" formControlName="nik" [ngClass]="getValidClass('nik')" id="nik" required>
             </div>
         </div>
 
         <div class="form-group row">
-            <label for="nik" class="col-sm-2 col-form-label">Nik</label>
+            <label for="nomorKK" class="col-sm-2 col-form-label">No. KK</label>
             <div class="col-sm-10">
-            <input type="text" formControlName="nik" [ngClass]="getValidClass('nik')" id="nik" required>
+            <input type="text" formControlName="nomorKK" [ngClass]="getValidClass('nomorKK')" id="nomorKK" required>
             </div>
         </div>
 
@@ -173,6 +173,15 @@
 
                     <div class="form-group row">
                         <label for="hubunganKeluarga" class="col-sm-2 col-form-label">Hubungan Keluarga</label>
+                        <div class="col-sm-4">
+                            <select [ngClass]="getValidClass('hubunganKeluarga')" formControlName="hubunganKeluarga" required>
+                                <option *ngFor="let hubkeluarga of hubKeluargaList" [ngValue]="hubkeluarga">{{ hubkeluarga.deskripsi }}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="hubunganKeluarga" class="col-sm-2 col-form-label">Group Keluarga</label>
                         <div class="col-sm-4">
                             <select [ngClass]="getValidClass('hubunganKeluarga')" formControlName="hubunganKeluarga" required>
                                 <option *ngFor="let hubkeluarga of hubKeluargaList" [ngValue]="hubkeluarga">{{ hubkeluarga.deskripsi }}</option>

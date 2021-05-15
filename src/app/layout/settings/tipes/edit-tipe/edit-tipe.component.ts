@@ -25,7 +25,8 @@ export class EditTipeComponent implements OnInit {
     constructor(private route: ActivatedRoute, private tipesService: TipesService, private storage: StorageMap) {
         this.tipeForm = new FormGroup({
             tipeId: new FormControl(),
-            namaTipe: new FormControl(null, [Validators.required])
+            namaTipe: new FormControl(null, [Validators.required]),
+            isSystem: new FormControl(null)
         });
     }
 
@@ -34,7 +35,8 @@ export class EditTipeComponent implements OnInit {
         if (tipeId === 0) {
             this.tipeForm.patchValue({
                 tipeId: 'New',
-                namaTipe: ''
+                namaTipe: '',
+                isSystem: false
             });
             this.editHeader = 'Buat Tipe Baru';
         } else {
@@ -43,7 +45,8 @@ export class EditTipeComponent implements OnInit {
                     tipeList.filter(tipe => tipe.id === tipeId).map(tipe => {
                         this.tipeForm.patchValue({
                             tipeId: tipe.id.toString(),
-                            namaTipe: tipe.nama
+                            namaTipe: tipe.nama,
+                            isSystem: tipe.isSystem
                         });
                         this.editHeader = 'Edit Tipe';
                     });
@@ -64,6 +67,7 @@ export class EditTipeComponent implements OnInit {
         const tipeData: TipeDto = {
             id: this.tipeForm.get('tipeId').value === 'New' ? 0 : this.tipeForm.get('tipeId').value,
             nama: this.tipeForm.get('namaTipe').value,
+            isSystem : this.tipeForm.get('isSystem').value,
         };
 
         this.tipesService
