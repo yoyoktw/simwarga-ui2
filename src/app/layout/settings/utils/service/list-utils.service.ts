@@ -37,7 +37,7 @@ function sort(utils: ListUtil[], column: SortColumn, direction: string): ListUti
 
 function matches(util: ListUtil, term: string, pipe: PipeTransform) {
     return util.deskripsi.toLowerCase().includes(term.toLowerCase())
-        || pipe.transform(util.tipe).includes(term);
+        || util.namaTipe.toLowerCase().includes(term.toLowerCase());
 }
 
 @Injectable({providedIn: 'root'})

@@ -88,7 +88,8 @@ export class EditUtilComponent implements OnInit {
     const utilData: UtilDto = {
         id: this.utilForm.get('utilId').value === 'New' ? 0 : this.utilForm.get('utilId').value,
         deskripsi: this.utilForm.get('deskripsiUtil').value,
-        tipe: (this.utilForm.get('tipe').value).id
+        tipe: (this.utilForm.get('tipe').value).id,
+        isSystem: (this.utilForm.get('tipe').value).isSystem,
     };
 
     this.utilsService
