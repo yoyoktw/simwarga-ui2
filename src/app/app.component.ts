@@ -18,6 +18,6 @@ export class AppComponent implements OnInit {
 
     doUnload() {
         // Clear session or do something
-        this.authService.logout();
+        // this.authService.logout();
     }
 }
