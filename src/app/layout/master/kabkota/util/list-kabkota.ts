@@ -4,4 +4,5 @@ export interface ListKabkota {
     tipe: string;
     deskripsi: string;
     propinsi: number;
+    namaPropinsi?: string;
 }

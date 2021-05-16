@@ -39,7 +39,8 @@ function matches(itemList: ListKabkota, term: string, pipe: PipeTransform) {
     return itemList.nama.toLowerCase().includes(term.toLowerCase())
     || itemList.tipe.toLowerCase().includes(term.toLowerCase())
     || itemList.deskripsi.toLowerCase().includes(term.toLowerCase())
-    || pipe.transform(itemList.propinsi).includes(term);
+    || itemList.namaPropinsi.toLowerCase().includes(term.toLowerCase());
+    // || pipe.transform(itemList.propinsi).includes(term);
 }
 
 @Injectable({providedIn: 'root'})
@@ -75,7 +76,6 @@ export class ListKabkotaService {
 
     this.storage.get(StorageConstants.SETTINGS_KABKOTA).subscribe((listKabkota: ListKabkota[]) => {
         this._items = listKabkota;
-        // console.log(this._tipeList);
     });
   }
 

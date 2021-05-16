@@ -9,4 +9,6 @@ export class KabkotaDto {
 
     propinsi: number;
 
+    namaPropinsi?: string;
+
 }
