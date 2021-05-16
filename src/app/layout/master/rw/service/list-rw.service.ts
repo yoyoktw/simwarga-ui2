@@ -36,7 +36,8 @@ function sort(itemList: ListRW[], column: SortColumn, direction: string): ListRW
 }
 
 function matches(itemList: ListRW, term: string, pipe: PipeTransform) {
-    return itemList.nama.toLowerCase().includes(term.toLowerCase()) || pipe.transform(itemList.desa).includes(term);
+    return itemList.nama.toLowerCase().includes(term.toLowerCase()) || itemList.namaDesa.toLowerCase().includes(term.toLowerCase());
+    // pipe.transform(itemList.desa).includes(term);
 }
 
 @Injectable({providedIn: 'root'})

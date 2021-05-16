@@ -37,11 +37,11 @@ function sort(itemList: ListRT[], column: SortColumn, direction: string): ListRT
 
 function matches(itemList: ListRT, term: string, pipe: PipeTransform) {
     return itemList.nama.toLowerCase().includes(term.toLowerCase())
-    || pipe.transform(itemList.rw).includes(term)
-    || pipe.transform(itemList.desa).includes(term)
-    || pipe.transform(itemList.kecamatan).includes(term)
-    || pipe.transform(itemList.kabkota).includes(term)
-    || pipe.transform(itemList.propinsi).includes(term);
+    || itemList.namaRW.toLowerCase().includes(term.toLowerCase())
+    || itemList.namaDesa.toLowerCase().includes(term.toLowerCase())
+    || itemList.namaKecamatan.toLowerCase().includes(term.toLowerCase())
+    || itemList.namaKabkota.toLowerCase().includes(term.toLowerCase())
+    || itemList.namaPropinsi.toLowerCase().includes(term.toLowerCase());
 }
 
 @Injectable({providedIn: 'root'})

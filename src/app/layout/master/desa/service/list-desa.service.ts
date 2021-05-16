@@ -36,7 +36,8 @@ function sort(itemList: ListDesa[], column: SortColumn, direction: string): List
 }
 
 function matches(itemList: ListDesa, term: string, pipe: PipeTransform) {
-    return itemList.nama.toLowerCase().includes(term.toLowerCase()) || pipe.transform(itemList.kecamatan).includes(term);
+    return itemList.nama.toLowerCase().includes(term.toLowerCase()) || itemList.namaKecamatan.toLowerCase().includes(term.toLowerCase());
+    // pipe.transform(itemList.kecamatan).includes(term);
 }
 
 @Injectable({providedIn: 'root'})

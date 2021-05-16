@@ -2,8 +2,13 @@ export class RTDto {
     id: number;
     nama: string;
     rw: number;
+    namaRW?: string;
     desa: number;
-    kabkota: number;
-    propinsi: number;
+    namaDesa?: string;
     kecamatan: number;
+    namaKecamatan?: string;
+    kabkota: number;
+    namaKabkota?: string;
+    propinsi: number;
+    namaPropinsi?: string;
 }
