@@ -36,7 +36,9 @@ function sort(itemList: ListKecamatan[], column: SortColumn, direction: string):
 }
 
 function matches(itemList: ListKecamatan, term: string, pipe: PipeTransform) {
-    return itemList.nama.toLowerCase().includes(term.toLowerCase()) || pipe.transform(itemList.kabkota).includes(term);
+    return itemList.nama.toLowerCase().includes(term.toLowerCase())
+    || itemList.namaKabkota.toLowerCase().includes(term.toLowerCase());
+    // pipe.transform(itemList.kabkota).includes(term);
 }
 
 @Injectable({providedIn: 'root'})

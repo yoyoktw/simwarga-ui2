@@ -26,7 +26,7 @@
               <!-- <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag" class="mr-2" style="width: 20px"> -->
               <ngb-highlight [result]="kecamatan.nama" [term]="service.searchTerm"></ngb-highlight>
             </td>
-            <td><ngb-highlight [result]="kecamatan.kabkota | number" [term]="service.searchTerm"></ngb-highlight></td>
+            <td><ngb-highlight [result]="kecamatan.namaKabkota" [term]="service.searchTerm"></ngb-highlight></td>
             <!-- <td><ngb-highlight [result]="country.population | number" [term]="service.searchTerm"></ngb-highlight></td> -->
             <!-- <td>
                 <button type="button" class="btn btn-outline-primary mr-2 bi-alarm" [routerLink]="['/tipes', tipe.id]">Edit</button>
