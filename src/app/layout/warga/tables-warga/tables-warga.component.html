@@ -16,11 +16,11 @@
             <th scope="col" sortable="alamatTinggal" (sort)="onSort($event)">Alamat</th>
             <th scope="col" sortable="rt" (sort)="onSort($event)">RT</th>
             <th scope="col" sortable="email" (sort)="onSort($event)">Email</th>
-            <th scope="col">Action</th>
+            <!-- <th scope="col">Action</th> -->
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let warga of wargas$ | async">
+          <tr *ngFor="let warga of wargas$ | async" (click)="onClick(warga.id)">
             <!-- <th scope="row">{{ warga.nik }}</th> -->
             <td>
                 <ngb-highlight [result]="warga.nik" [term]="service.searchTerm"></ngb-highlight>
@@ -37,9 +37,9 @@
             <td>
                 <ngb-highlight [result]="warga.email" [term]="service.searchTerm"></ngb-highlight>
             </td>
-            <td>
+            <!-- <td>
                 <button type="button" class="btn btn-outline-primary mr-2 bi-alarm" [routerLink]="['/warga', warga.id]">Edit</button>
-            </td>
+            </td> -->
           </tr>
           </tbody>
         </table>

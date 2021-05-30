@@ -16,11 +16,11 @@
             <th scope="col" sortable="deskripsi" (sort)="onSort($event)">Deskripsi</th>
             <th scope="col" sortable="tipe" (sort)="onSort($event)">Tipe</th>
             <!-- <th scope="col" sortable="population" (sort)="onSort($event)">Population</th> -->
-            <th scope="col">Action</th>
+            <!-- <th scope="col">Action</th> -->
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let util of utils$ | async">
+          <tr *ngFor="let util of utils$ | async" (click)="onClick(util.id)">
             <td scope="row">{{ util.id }}</td>
             <td>
               <!-- <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag" class="mr-2" style="width: 20px"> -->
@@ -28,9 +28,9 @@
             </td>
             <td><ngb-highlight [result]="util.namaTipe" [term]="service.searchTerm"></ngb-highlight></td>
             <!-- <td><ngb-highlight [result]="country.population | number" [term]="service.searchTerm"></ngb-highlight></td> -->
-            <td>
+            <!-- <td>
                 <button type="button" class="btn btn-outline-primary mr-2 bi-alarm" [routerLink]="['/utils', util.id]">Edit</button>
-            </td>
+            </td> -->
           </tr>
           </tbody>
         </table>

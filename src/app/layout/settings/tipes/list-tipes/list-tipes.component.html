@@ -16,11 +16,11 @@
             <th scope="col" sortable="nama" (sort)="onSort($event)">Nama</th>
             <th scope="col" sortable="isSystem" >Is Sistem?</th>
             <!-- <th scope="col" sortable="population" (sort)="onSort($event)">Population</th> -->
-            <th scope="col">Action</th>
+            <!-- <th scope="col">Action</th> -->
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let tipe of tipes$ | async">
+          <tr *ngFor="let tipe of tipes$ | async" (click)="onClick(tipe.id)">
             <th scope="row">{{ tipe.id }}</th>
             <td>
               <!-- <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag" class="mr-2" style="width: 20px"> -->
@@ -31,9 +31,9 @@
             </td>
             <!-- <td><ngb-highlight [result]="country.area | number" [term]="service.searchTerm"></ngb-highlight></td> -->
             <!-- <td><ngb-highlight [result]="country.population | number" [term]="service.searchTerm"></ngb-highlight></td> -->
-            <td>
+            <!-- <td>
                 <button type="button" class="btn btn-outline-primary mr-2 bi-alarm" [routerLink]="['/tipes', tipe.id]">Edit</button>
-            </td>
+            </td> -->
           </tr>
           </tbody>
         </table>

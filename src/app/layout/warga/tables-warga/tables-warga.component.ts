@@ -1,5 +1,6 @@
 import { DecimalPipe } from '@angular/common';
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { routerTransition } from '../../../router.animations';
 import { ListWargaService } from '../service/list-warga.service';
@@ -24,7 +25,7 @@ export class TablesWargaComponent implements OnInit {
   // tslint:disable-next-line: member-ordering
   @ViewChildren(WargaHeaderDirective) headers: QueryList<WargaHeaderDirective>;
 
-  constructor(public service: ListWargaService) {
+  constructor(public service: ListWargaService, private router: Router) {
     this.wargas$ = service.wargas$;
     this.total$ = service.total$;
   }
@@ -39,6 +40,10 @@ export class TablesWargaComponent implements OnInit {
 
     this.service.sortColumn = column;
     this.service.sortDirection = direction;
+  }
+
+  public onClick(id: number) {
+    this.router.navigate(['/warga', id]);
   }
 
 }

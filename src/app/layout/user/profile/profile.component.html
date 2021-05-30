@@ -1,0 +1,102 @@
+<div [@routerTransition]>
+    <app-page-header [heading]="'Profile User'" [icon]="'fa-table'"></app-page-header>
+
+    <!-- <div class="pull-right">
+        <button class="btn btn-outline-primary mr-2" [routerLink]="['/user/changepwd']">Ganti Password</button>
+    </div> -->
+
+    <form [formGroup]="profileForm" >
+
+        <div class="form-group row">
+            <div class="col-sm-6">
+                <button type="submit" *ngIf="isSuperUser" class="btn btn-outline-primary mr-2 pull-left" >Simpan</button>
+                <button type="button" class="btn btn-outline-primary mr-2 pull-left" [routerLink]="['/user/changepwd']">Ganti Password</button>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="username" class="col-sm-2 col-form-label">Username</label>
+            <div class="col-sm-10">
+            <input type="text" *ngIf="isSuperUser" disabled="true" formControlName="username" class="form-control" id="username" required>
+            <input type="text" *ngIf="!isSuperUser" formControlName="username" class="form-control" id="username" required>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="email" class="col-sm-2 col-form-label">Email</label>
+            <div class="col-sm-10">
+            <input type="text" *ngIf="isSuperUser" disabled="true" formControlName="email" class="form-control" id="email" required>
+            <input type="text" *ngIf="!isSuperUser" formControlName="email" class="form-control" id="email" required>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="userLevel" class="col-sm-2 col-form-label">User Level</label>
+            <div class="col-sm-10">
+            <input type="text" *ngIf="isSuperUser" disabled="true" formControlName="userLevel" class="form-control" id="userLevel" required>
+            <input type="text" *ngIf="!isSuperUser" formControlName="userLevel" class="form-control" id="userLevel" required>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="propinsi" class="col-sm-2 col-form-label">Propinsi</label>
+            <div class="col-sm-10">
+                <select *ngIf="isSuperUser" class="form-control" formControlName="propinsi" required>
+                    <option *ngFor="let sex of jenisKelaminList" [ngValue]="sex">{{ sex.deskripsi }}</option>
+                </select>
+                <input type="text" *ngIf="!isSuperUser" formControlName="propinsi" class="form-control" id="propinsi" required>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="kabkota" class="col-sm-2 col-form-label">Kab / Kota</label>
+            <div class="col-sm-10">
+                <select *ngIf="isSuperUser" class="form-control" formControlName="kabkota" required>
+                    <option *ngFor="let sex of jenisKelaminList" [ngValue]="sex">{{ sex.deskripsi }}</option>
+                </select>
+                <input type="text" *ngIf="!isSuperUser" formControlName="kabkota" class="form-control" id="kabkota" required>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="kecamatan" class="col-sm-2 col-form-label">Kecamatan</label>
+            <div class="col-sm-10">
+                <select *ngIf="isSuperUser" class="form-control" formControlName="kecamatan" required>
+                    <option *ngFor="let sex of jenisKelaminList" [ngValue]="sex">{{ sex.deskripsi }}</option>
+                </select>
+                <input type="text" *ngIf="!isSuperUser" formControlName="kecamatan" class="form-control" id="kecamatan" required>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="desa" class="col-sm-2 col-form-label">Desa</label>
+            <div class="col-sm-10">
+                <select *ngIf="isSuperUser" class="form-control" formControlName="desa" required>
+                    <option *ngFor="let sex of jenisKelaminList" [ngValue]="sex">{{ sex.deskripsi }}</option>
+                </select>
+                <input type="text" *ngIf="!isSuperUser" formControlName="desa" class="form-control" id="desa" required>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="rw" class="col-sm-2 col-form-label">RW</label>
+            <div class="col-sm-10">
+                <select *ngIf="isSuperUser" class="form-control" formControlName="rw" required>
+                    <option *ngFor="let sex of jenisKelaminList" [ngValue]="sex">{{ sex.deskripsi }}</option>
+                </select>
+                <input type="text" *ngIf="!isSuperUser" formControlName="rw" class="form-control" id="rw" required>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="rt" class="col-sm-2 col-form-label">RT</label>
+            <div class="col-sm-10">
+                <select *ngIf="isSuperUser" class="form-control" formControlName="rt" required>
+                    <option *ngFor="let sex of jenisKelaminList" [ngValue]="sex">{{ sex.deskripsi }}</option>
+                </select>
+                <input type="text" *ngIf="!isSuperUser" formControlName="rt" class="form-control" id="rt" required>
+            </div>
+        </div>
+
+    </form>
+</div>

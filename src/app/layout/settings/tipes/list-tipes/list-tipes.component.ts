@@ -1,5 +1,7 @@
 import { DecimalPipe } from '@angular/common';
+import { identifierName } from '@angular/compiler';
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { routerTransition } from '../../../../router.animations';
 import { ListTipesService } from '../service/list-tipes.service';
@@ -26,7 +28,7 @@ export class ListTipesComponent implements OnInit {
   // tslint:disable-next-line: member-ordering
   @ViewChildren(TipesHeaderDirective) headers: QueryList<TipesHeaderDirective>;
 
-  constructor(public service: ListTipesService) {
+  constructor(public service: ListTipesService, private router: Router) {
     this.tipes$ = service.tipes$;
     this.total$ = service.total$;
   }
@@ -43,4 +45,7 @@ export class ListTipesComponent implements OnInit {
     this.service.sortDirection = direction;
   }
 
+  public onClick(id: number) {
+    this.router.navigate(['/tipes', id]);
+  }
 }

@@ -6,6 +6,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PageHeaderModule } from '../../shared';
 import { UserRoutingModule } from './user-routing.module';
+import { ProfileComponent } from './profile/profile.component';
+import { ChangepwdComponent } from './changepwd/changepwd.component';
 
 
 
@@ -16,6 +18,6 @@ import { UserRoutingModule } from './user-routing.module';
         ReactiveFormsModule,
         NgbModule
     ],
-    declarations: [ListUserComponent, EditUserComponent],
+    declarations: [ListUserComponent, EditUserComponent, ProfileComponent, ChangepwdComponent],
 })
 export class UserModule { }
