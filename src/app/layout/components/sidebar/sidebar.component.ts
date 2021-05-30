@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { StorageConstants } from '../../../shared/constants/storage.constants';
 import { UserDto } from '../../../core/dto/user.dto';
 import { AuthService } from '../../../core/services/auth.service';
+import { UserUtils } from '../../../shared/utils/user.utils';
 
 @Component({
     selector: 'app-sidebar',
@@ -17,6 +18,7 @@ export class SidebarComponent implements OnInit {
     showMenu: string;
     pushRightClass: string;
     public username: String;
+    public isAllow: boolean;
 
     @Output() collapsedEvent = new EventEmitter<boolean>();
 
@@ -39,6 +41,7 @@ export class SidebarComponent implements OnInit {
         this.storage.get(StorageConstants.CURRENT_USER).subscribe((currentUser: UserDto) => {
             if (currentUser !== undefined) {
                 this.username = currentUser.username ? currentUser.username : currentUser.email;
+                this.isAllow = this.isAllowed(currentUser.userLevel);
             }
         });
     }
@@ -81,5 +84,11 @@ export class SidebarComponent implements OnInit {
 
     onLoggedout() {
         this.authService.logout();
+    }
+
+    private isAllowed(userLevel: string) {
+        let result = false;
+        result = UserUtils.isSuperUser(userLevel) || UserUtils.isAdminRT(userLevel);
+        return result;
     }
 }

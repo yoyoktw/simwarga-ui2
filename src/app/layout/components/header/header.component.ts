@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { StorageConstants } from '../../../shared/constants/storage.constants';
 import { UserDto } from '../../../core/dto/user.dto';
 import { AuthService } from '../../../core/services/auth.service';
+import { UserUtils } from '../../../shared/utils/user.utils';
 
 @Component({
     selector: 'app-header',
@@ -14,6 +15,7 @@ import { AuthService } from '../../../core/services/auth.service';
 export class HeaderComponent implements OnInit {
     public pushRightClass: string;
     public username: String;
+    public userSubTitle: String;
 
     constructor(private translate: TranslateService,
                 public router: Router,
@@ -33,8 +35,22 @@ export class HeaderComponent implements OnInit {
         this.storage.get(StorageConstants.CURRENT_USER).subscribe((currentUser: UserDto) => {
             if (currentUser !== undefined) {
                 this.username = currentUser.username ? currentUser.username : currentUser.email;
+                this.userSubTitle = this.getSubTitle(currentUser);
             }
         });
+    }
+
+    private getSubTitle(currentUser: UserDto) {
+        if (UserUtils.isSuperUser(currentUser.userLevel)) {
+            return currentUser.userLevel;
+        }
+        if (UserUtils.isPengurusRW(currentUser.userLevel)) {
+            return 'RW ' + currentUser.namaRW.toString();
+        }
+        if (UserUtils.isPengurusRT(currentUser.userLevel) || UserUtils.isAdminRT(currentUser.userLevel)) {
+            return 'RT ' + currentUser.namaRT.toString();
+        }
+        return '';
     }
 
     isToggled(): boolean {

@@ -59,17 +59,37 @@
             </li>
         </div> -->
 
-        <a [routerLinkActive]="['router-link-active']" [routerLink]="['/user']" class="list-group-item">
+        <a [routerLinkActive]="['router-link-active']" [routerLink]="['/propinsi']" class="list-group-item">
             <i class="fa fa-fw fa-table"></i>&nbsp;
-            <span>{{ 'Users' | translate }}</span>
+            <span>{{ 'Propinsi' | translate }}</span>
+        </a>
+        <a [routerLinkActive]="['router-link-active']" [routerLink]="['/kabkota']" class="list-group-item">
+            <i class="fa fa-fw fa-table"></i>&nbsp;
+            <span>{{ 'Kabupaten - Kota' | translate }}</span>
+        </a>
+        <a [routerLinkActive]="['router-link-active']" [routerLink]="['/kecamatan']" class="list-group-item">
+            <i class="fa fa-fw fa-table"></i>&nbsp;
+            <span>{{ 'Kecamatan' | translate }}</span>
+        </a>
+        <a [routerLinkActive]="['router-link-active']" [routerLink]="['/desa']" class="list-group-item">
+            <i class="fa fa-fw fa-table"></i>&nbsp;
+            <span>{{ 'Desa' | translate }}</span>
+        </a>
+        <a [routerLinkActive]="['router-link-active']" [routerLink]="['/rw']" class="list-group-item">
+            <i class="fa fa-fw fa-table"></i>&nbsp;
+            <span>{{ 'Rukun Warga' | translate }}</span>
+        </a>
+        <a [routerLinkActive]="['router-link-active']" [routerLink]="['/rt']" class="list-group-item">
+            <i class="fa fa-fw fa-table"></i>&nbsp;
+            <span>{{ 'Rukun Tetangga' | translate }}</span>
         </a>
 
-        <div class="nested-menu">
+        <!-- <div class="nested-menu">
             <a (click)="addExpandClass('masters')" class="list-group-item">
                 <i class="fa fa-th-list"></i>&nbsp;
                 <span>{{ 'Master' | translate }}</span>
             </a>
-            <li [class.expand]="1" class="nested">
+            <li [class.expand]="showMenu === 'masters'" class="nested">
                 <ul class="submenu">
                     <li>
                         <a [routerLinkActive]="['router-link-active']" [routerLink]="['/propinsi']" class="list-group-item">
@@ -109,20 +129,29 @@
                     </li>
                 </ul>
             </li>
-        </div>
-        <div class="nested-menu">
+        </div> -->
+
+        <a *ngIf="isAllow" [routerLinkActive]="['router-link-active']" [routerLink]="['/tipes']" class="list-group-item">
+            <i class="fa fa-fw fa-wrench"></i>&nbsp;
+            <span>{{ 'Tipes' | translate }}</span>
+        </a>
+        <a *ngIf="isAllow" [routerLinkActive]="['router-link-active']" [routerLink]="['/utils']" class="list-group-item">
+            <i class="fa fa-fw fa-wrench"></i>&nbsp;
+            <span>{{ 'Utils' | translate }}</span>
+        </a>
+
+        <a *ngIf="isAllow" [routerLinkActive]="['router-link-active']" [routerLink]="['/user']" class="list-group-item">
+            <i class="fa fa-fw fa-user"></i>&nbsp;
+            <span>{{ 'Users' | translate }}</span>
+        </a>
+
+        <!-- <div *ngIf="isAllow" class="nested-menu">
             <a (click)="addExpandClass('settings')" class="list-group-item">
                 <i class="fa fa-fw fa-wrench"></i>&nbsp;
                 <span>{{ 'Settings' | translate }}</span>
             </a>
-            <li [class.expand]="1" class="nested">
+            <li [class.expand]="showMenu === 'settings'" class="nested">
                 <ul class="submenu">
-                    <!-- <li>
-                        <a href="javascript:void(0)" class="list-group-item">
-                            <i class="fa fa-fw fa-table"></i>&nbsp;
-                            <span>{{ 'Users' | translate }}</span>
-                        </a>
-                    </li> -->
                     <li>
                         <a [routerLinkActive]="['router-link-active']" [routerLink]="['/tipes']" class="list-group-item">
                             <i class="fa fa-fw fa-table"></i>&nbsp;
@@ -137,7 +166,32 @@
                     </li>
                 </ul>
             </li>
-        </div>
+        </div> -->
+
+        <!-- <div class="header-fields">
+            <div class="nested-menu">
+                <a (click)="addExpandClass('settings')" class="list-group-item">
+                    <i class="fa fa-fw fa-wrench"></i>&nbsp;
+                    <span>{{ 'Settings' | translate }}</span>
+                </a>
+                <li [class.expand]="showMenu === 'settings'" class="nested">
+                    <ul class="submenu">
+                        <li>
+                            <a [routerLinkActive]="['router-link-active']" [routerLink]="['/tipes']" class="list-group-item">
+                                <i class="fa fa-fw fa-table"></i>&nbsp;
+                                <span>{{ 'Tipes' | translate }}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a [routerLinkActive]="['router-link-active']" [routerLink]="['/utils']" class="list-group-item">
+                                <i class="fa fa-fw fa-table"></i>&nbsp;
+                                <span>{{ 'Utils' | translate }}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </div>
+        </div> -->
         <!-- <a [routerLinkActive]="['router-link-active']" [routerLink]="['/blank-page']" class="list-group-item">
             <i class="fa fa-file-o"></i>&nbsp;
             <span>{{ 'Blank Page' | translate }}</span>
@@ -148,54 +202,6 @@
         </a> -->
 
         <div class="header-fields">
-            <!--
-            <a (click)="rltAndLtr()" class="list-group-item">
-                <span><i class="fa fa-arrows-h"></i>&nbsp; RTL/LTR</span>
-            </a>
-            <div class="nested-menu">
-                <a (click)="addExpandClass('languages')" class="list-group-item">
-                    <span><i class="fa fa-language"></i>&nbsp; {{ 'Language' | translate }} <b class="caret"></b></span>
-                </a>
-                <li [class.expand]="showMenu === 'languages'" class="nested">
-                    <ul class="submenu">
-                        <li>
-                            <a (click)="changeLang('en')" href="javascript:void(0)">
-                                {{ 'English' | translate }}
-                            </a>
-                        </li>
-                        <li>
-                            <a (click)="changeLang('fr')" href="javascript:void(0)">
-                                {{ 'French' | translate }}
-                            </a>
-                        </li>
-                        <li>
-                            <a (click)="changeLang('ur')" href="javascript:void(0)">
-                                {{ 'Urdu' | translate }}
-                            </a>
-                        </li>
-                        <li>
-                            <a (click)="changeLang('es')" href="javascript:void(0)">
-                                {{ 'Spanish' | translate }}
-                            </a>
-                        </li>
-                        <li>
-                            <a (click)="changeLang('it')" href="javascript:void(0)">
-                                {{ 'Italian' | translate }}
-                            </a>
-                        </li>
-                        <li>
-                            <a (click)="changeLang('fa')" href="javascript:void(0)">
-                                {{ 'Farsi' | translate }}
-                            </a>
-                        </li>
-                        <li>
-                            <a (click)="changeLang('de')" href="javascript:void(0)">
-                                {{ 'German' | translate }}
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            </div> -->
             <div class="nested-menu">
                 <a (click)="addExpandClass('profile')" class="list-group-item">
                     <span><i class="fa fa-user"></i>&nbsp; {{ username }}</span>
@@ -217,6 +223,13 @@
                                 <span><i class="fa fa-fw fa-gear"></i> {{ 'Settings' | translate }}</span>
                             </a>
                         </li> -->
+                        <li>
+                            <a class="dropdown-item" [routerLink]="['/user/profile']">
+                                <span>
+                                    <i class="fa fa-fw fa-user"></i> {{ 'Profile' | translate }}
+                                </span>
+                            </a>
+                        </li>
                         <li>
                             <a (click)="onLoggedout()" [routerLink]="['/login']">
                                 <span><i class="fa fa-fw fa-power-off"></i> {{ 'Log Out' | translate }}</span>

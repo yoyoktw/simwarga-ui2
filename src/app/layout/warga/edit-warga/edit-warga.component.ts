@@ -348,12 +348,18 @@ export class EditWargaComponent implements OnInit, AfterViewChecked {
         }
         if (this.wargaForm.get('vaksinCovidKe1').value && this.wargaForm.get('vaksinCovidKe1').value !== '') {
             wargaData.vaksinCovidKe1 = this.getDate(this.wargaForm.get('vaksinCovidKe1').value);
+        } else {
+            wargaData.vaksinCovidKe1 = null;
         }
         if (this.wargaForm.get('vaksinCovidKe2').value && this.wargaForm.get('vaksinCovidKe2').value !== '') {
             wargaData.vaksinCovidKe2 = this.getDate(this.wargaForm.get('vaksinCovidKe2').value);
+        } else {
+            wargaData.vaksinCovidKe2 = null;
         }
         if (this.wargaForm.get('vaksinCovidKe3').value && this.wargaForm.get('vaksinCovidKe3').value !== '') {
             wargaData.vaksinCovidKe3 = this.getDate(this.wargaForm.get('vaksinCovidKe3').value);
+        } else {
+            wargaData.vaksinCovidKe3 = null;
         }
 
         wargaData.rt = 4;
