@@ -1,6 +1,6 @@
 export interface UserDto {
     username: string;
-    id: string;
+    id?: string;
     email: string;
     isActive?: boolean;
     userLevel?: string;
@@ -16,4 +16,5 @@ export interface UserDto {
     namaRW?: number;
     rt?: number;
     namaRT?: number;
+    password?: string;
 }

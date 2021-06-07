@@ -10,9 +10,11 @@ import { PropinsiService } from '../core/services/propinsi.service';
 import { RTService } from '../core/services/rt.service';
 import { RWService } from '../core/services/rw.service';
 import { TipesService } from '../core/services/tipes.service';
+import { UserService } from '../core/services/user.service';
 import { UtilsService } from '../core/services/Utils.service';
 import { WargaService } from '../core/services/warga.service';
 import { routerTransition } from '../router.animations';
+import { UserUtils } from '../shared/utils/user.utils';
 
 @Component({
     selector: 'app-login',
@@ -32,6 +34,7 @@ export class LoginComponent implements OnInit {
         private desaService: DesaService,
         private rwService: RWService,
         private rtService: RTService,
+        private userService: UserService,
         private router: Router) {
             this.loginForm = new FormGroup({
                 username: new FormControl(),
@@ -73,6 +76,11 @@ export class LoginComponent implements OnInit {
                                     this.desaService.getListDesa().subscribe();
                                     this.rwService.getListRW().subscribe();
                                     this.rtService.getListRT().subscribe();
+
+                                    if (this.isAllowed(responseUser.userLevel)) {
+                                        this.userService.getUsers().subscribe();
+                                    }
+
                                     this.router.navigate(['/dashboard']);
                                 }
                             }
@@ -84,4 +92,11 @@ export class LoginComponent implements OnInit {
                 }
             );
     }
+
+    private isAllowed(userLevel: string) {
+        let result = false;
+        result = UserUtils.isSuperUser(userLevel) || UserUtils.isAdminRT(userLevel);
+        return result;
+    }
+
 }

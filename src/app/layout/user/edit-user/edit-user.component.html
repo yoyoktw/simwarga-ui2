@@ -1,1 +1,103 @@
-<p>edit-user works!</p>
+<div [@routerTransition]>
+    <app-page-header [heading]="getHeaderTitle()" [icon]="'fa-table'"></app-page-header>
+</div>
+<form [formGroup]="userForm" (ngSubmit)="onFormSubmit()">
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <button type="submit" class="btn btn-outline-primary mr-2 pull-left" >Simpan</button>
+            <button type="button" class="btn btn-outline-primary mr-2 pull-left" >Activate</button>
+            <button type="button" class="btn btn-outline-primary mr-2 pull-left" [routerLink]="['/user']">Daftar User</button>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="username" class="col-sm-2 col-form-label">Username</label>
+        <div class="col-sm-10">
+          <input type="text" *ngIf="isHidePassword" disabled="true" formControlName="username" class="form-control" id="username" required>
+          <input type="text" *ngIf="!isHidePassword" formControlName="username" [ngClass]="getValidClass('username')" id="username" required>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="email" class="col-sm-2 col-form-label">Email</label>
+        <div class="col-sm-10">
+        <input type="text" formControlName="email" [ngClass]="getValidClass('email')" id="email" required email>
+        </div>
+    </div>
+
+    <div class="form-group row" *ngIf="!isHidePassword">
+        <label for="userPassword" class="col-sm-2 col-form-label">Password</label>
+        <div class="col-sm-10">
+        <input type="password" formControlName="userPassword" [ngClass]="getValidClass('userPassword')" id="userPassword" required>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="userLevel" class="col-sm-2 col-form-label">User Level</label>
+        <div class="col-sm-6">
+            <select formControlName="userLevel" [ngClass]="getValidClass('userLevel')" required>
+                <option *ngFor="let userLevel of userLevelList" [ngValue]="userLevel">{{ userLevel.deskripsi }}</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="propinsi" class="col-sm-2 col-form-label">Propinsi</label>
+        <div class="col-sm-6">
+            <select formControlName="propinsi" [ngClass]="getValidClass('propinsi')" required>
+                <option *ngFor="let propinsi of propinsiList" [ngValue]="propinsi">{{ propinsi.nama }}</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="kabkota" class="col-sm-2 col-form-label">Kab / Kota</label>
+        <div class="col-sm-6">
+            <select formControlName="kabkota" [ngClass]="getValidClass('kabkota')" required>
+                <option *ngFor="let kabkota of kabKotaList" [ngValue]="kabkota">{{ kabkota.deskripsi }}</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="kecamatan" class="col-sm-2 col-form-label">Kecamatan</label>
+        <div class="col-sm-6">
+            <select formControlName="kecamatan" [ngClass]="getValidClass('kecamatan')" required>
+                <option *ngFor="let kecamatan of kecamatanList" [ngValue]="kecamatan">{{ kecamatan.nama }}</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="desa" class="col-sm-2 col-form-label">Desa</label>
+        <div class="col-sm-6">
+            <select formControlName="desa" [ngClass]="getValidClass('desa')" required>
+                <option *ngFor="let desa of desaList" [ngValue]="desa">{{ desa.nama }}</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="rw" class="col-sm-2 col-form-label">RW</label>
+        <div class="col-sm-6">
+            <select formControlName="rw" [ngClass]="getValidClass('rw')" required>
+                <option *ngFor="let rw of rwList" [ngValue]="rw">{{ rw.nama }}</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="rt" class="col-sm-2 col-form-label">RT</label>
+        <div class="col-sm-6">
+            <select formControlName="rt" [ngClass]="getValidClass('rt')" required>
+                <option *ngFor="let rt of rtList" [ngValue]="rt">{{ rt.nama }}</option>
+            </select>
+        </div>
+    </div>
+</form>
+
+<p>
+    <ngb-alert [dismissible]="true" type="{{ alertType }}" *ngIf="!isAlertClosed" (close)="isAlertClosed=true">
+        {{ alertMessage }}
+    </ngb-alert>
+</p>

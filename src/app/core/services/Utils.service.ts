@@ -110,6 +110,15 @@ export class UtilsService {
                                 }
                             }
                         });
+                        this.storage.get(StorageConstants.SETTINGS_TIPEID_USER_LEVEL).subscribe(userLevelId  => {
+                            if (userLevelId) {
+                                const userLevelList = utils.filter(util => util.tipe === userLevelId);
+                                if (userLevelList) {
+                                    this.storage.set(StorageConstants.SETTINGS_UTILS_USER_LEVEL, userLevelList)
+                                    .subscribe(() => {});
+                                }
+                            }
+                        });
                     }
                     return utils;
                 })

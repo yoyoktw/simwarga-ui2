@@ -1,4 +1,8 @@
-import { AfterViewChecked, ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { AfterViewChecked,
+    ChangeDetectorRef,
+    Component,
+    OnInit,
+    ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { StorageMap } from '@ngx-pwa/local-storage';
@@ -364,7 +368,7 @@ export class EditWargaComponent implements OnInit, AfterViewChecked {
 
         wargaData.rt = 4;
 
-        console.log(wargaData);
+        // onsole.log(wargaData);
 
         return wargaData;
     }

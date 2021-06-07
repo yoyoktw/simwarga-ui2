@@ -5,4 +5,49 @@
         <!-- <button class="btn btn-outline-primary mr-2" [routerLink]="['/register']">Buat User Baru</button> -->
         <button class="btn btn-outline-primary mr-2" [routerLink]="['/user', 0]">Register</button>
     </div>
+
+    <form>
+        <div class="form-group form-inline">
+            Cari: <input class="form-control ml-2" type="text" name="searchTerm" [(ngModel)]="service.searchTerm"/>
+            <span class="ml-3" *ngIf="service.loading$ | async">Loading...</span>
+        </div>
+
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th scope="col" sortable="username" (sort)="onSort($event)">Username</th>
+            <th scope="col" sortable="email" (sort)="onSort($event)">Email</th>
+            <th scope="col" sortable="userLevel" (sort)="onSort($event)">User Level</th>
+            <th scope="col" sortable="isActive" >Active?</th>
+            <th scope="col" sortable="namaRW" (sort)="onSort($event)">RW</th>
+            <th scope="col" sortable="namaRT" (sort)="onSort($event)">RT</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let user of users$ | async" (click)="onClick(user.id)">
+            <td>
+              <ngb-highlight [result]="user.username" [term]="service.searchTerm"></ngb-highlight>
+            </td>
+            <td><ngb-highlight [result]="user.email" [term]="service.searchTerm"></ngb-highlight></td>
+            <td><ngb-highlight [result]="user.userLevel" [term]="service.searchTerm"></ngb-highlight></td>
+            <td><ngb-highlight [result]="user.isActive" ></ngb-highlight></td>
+            <td><ngb-highlight [result]="user.namaRW" [term]="service.searchTerm"></ngb-highlight></td>
+            <td><ngb-highlight [result]="user.namaRT" [term]="service.searchTerm"></ngb-highlight></td>
+          </tr>
+          </tbody>
+        </table>
+
+        <div class="d-flex justify-content-between p-2">
+          <ngb-pagination
+            [collectionSize]="(total$ | async)!" [(page)]="service.page" [pageSize]="service.pageSize">
+          </ngb-pagination>
+
+          <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
+            <option [ngValue]="10">10</option>
+            <option [ngValue]="20">20</option>
+          </select>
+        </div>
+
+      </form>
+
 </div>

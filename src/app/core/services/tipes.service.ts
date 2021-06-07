@@ -63,6 +63,11 @@ export class TipesService {
                             this.storage.set(StorageConstants.SETTINGS_TIPEID_PERNAH_COVID, tipePernahCovid.id)
                             .subscribe(() => {});
                         }
+                        const userLevel = tipes.find(tipe => tipe.nama && tipe.nama.toUpperCase() === 'USER LEVEL');
+                        if (userLevel) {
+                            this.storage.set(StorageConstants.SETTINGS_TIPEID_USER_LEVEL, userLevel.id)
+                            .subscribe(() => {});
+                        }
                     }
                     return tipes;
                 })
