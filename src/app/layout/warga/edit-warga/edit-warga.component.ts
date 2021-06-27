@@ -13,6 +13,7 @@ import { routerTransition } from '../../../router.animations';
 import { ListUtil } from '../../settings/utils/util/list-util';
 import { first } from 'rxjs/operators';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { UserDto } from '../../../core/dto/user.dto';
 
 @Component({
     selector: 'app-edit-warga',
@@ -41,6 +42,7 @@ export class EditWargaComponent implements OnInit, AfterViewChecked {
     public hubKeluargaList;
     public golDarahList;
     public pernahCovidList;
+    public profile: UserDto;
 
     constructor(private route: ActivatedRoute,
         private wargaService: WargaService,
@@ -209,6 +211,12 @@ export class EditWargaComponent implements OnInit, AfterViewChecked {
                 }
             });
         }
+
+        this.storage.get(StorageConstants.CURRENT_USER).subscribe((currentUser: UserDto) => {
+            if (currentUser) {
+                this.profile = currentUser;
+            }
+        });
     }
 
     public getHeaderTitle() {
@@ -366,9 +374,10 @@ export class EditWargaComponent implements OnInit, AfterViewChecked {
             wargaData.vaksinCovidKe3 = null;
         }
 
-        wargaData.rt = 4;
-
-        // onsole.log(wargaData);
+        if (this.profile) {
+            wargaData.rt = this.profile.rt;
+            wargaData.rw = this.profile.rw;
+        }
 
         return wargaData;
     }

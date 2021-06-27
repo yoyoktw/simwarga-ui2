@@ -29,6 +29,11 @@
                 &nbsp;
                 <!-- <a [routerLink]="['/signup']" class="btn rounded-btn">{{ 'Register' | translate }}</a> -->
             </form>
+            <p>
+                <ngb-alert [dismissible]="true" type="{{ alertType }}" *ngIf="!isAlertClosed" (close)="isAlertClosed=true">
+                    {{ alertMessage }}
+                </ngb-alert>
+            </p>
         </div>
     </div>
 </div>

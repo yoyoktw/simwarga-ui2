@@ -5,7 +5,7 @@ import { StorageMap } from '@ngx-pwa/local-storage';
 import { StorageConstants } from '../../../shared/constants/storage.constants';
 import { UserService } from '../../../core/services/user.service';
 import { routerTransition } from '../../../router.animations';
-import { UserDto } from '../../../core/dto/user.dto';
+import { ActivateUserDto, UserDto } from '../../../core/dto/user.dto';
 import { ListUtil } from '../../settings/utils/util/list-util';
 import { PropinsiDto } from '../../../core/dto/propinsi.dto';
 import { KabkotaDto } from '../../../core/dto/kabkota.dto';
@@ -25,7 +25,7 @@ import { first } from 'rxjs/operators';
 export class EditUserComponent implements OnInit {
     private editHeader: String;
     public userForm: FormGroup;
-    public isAlertClosed: Boolean = true;
+    public isAlertClosed = true;
     public userLevelList;
     public propinsiList;
     public kabKotaList;
@@ -35,7 +35,8 @@ export class EditUserComponent implements OnInit {
     public rtList;
     public alertMessage: String = '';
     public alertType: String = 'success';
-    public isHidePassword: Boolean = false;
+    public isHidePassword = false;
+    public isHideActive = true;
 
     constructor(private route: ActivatedRoute, private userService: UserService, private storage: StorageMap) {
         this.userForm = new FormGroup({
@@ -49,7 +50,7 @@ export class EditUserComponent implements OnInit {
             desa: new FormControl(null, [Validators.required]),
             rw: new FormControl(null, [Validators.required]),
             rt: new FormControl(null, [Validators.required]),
-            userPassword: new FormControl(null, [Validators.required]),
+            userPassword: new FormControl(null),
         });
 
         this.storage.get(StorageConstants.SETTINGS_UTILS_USER_LEVEL).subscribe((userLevels: ListUtil[]) => {
@@ -107,6 +108,7 @@ export class EditUserComponent implements OnInit {
                 userPassword: ''
             });
             this.editHeader = 'Buat User Baru';
+            this.isHideActive = false;
         } else {
             this.storage.get(StorageConstants.SETTINGS_USERS).subscribe((userList: UserDto[])  => {
                 if (userList) {
@@ -126,6 +128,7 @@ export class EditUserComponent implements OnInit {
                         });
                         this.editHeader = 'Edit User';
                         this.isHidePassword = true;
+                        this.isHideActive = true;
                     });
                 }
             });
@@ -137,7 +140,6 @@ export class EditUserComponent implements OnInit {
             return;
         }
         const userData = this.createUserData();
-        console.log(userData);
 
         this.userService
         .save(userData)
@@ -178,6 +180,29 @@ export class EditUserComponent implements OnInit {
         }
 
         return userData;
+    }
+
+    public activateUser() {
+        const userActivate: ActivateUserDto = {
+            username: this.userForm.get('username').value
+        };
+
+        this.userService
+        .activate(userActivate)
+        .pipe(first())
+        .subscribe(
+            (response) => {
+                this.userService.getUsers().subscribe();
+                this.isAlertClosed = false;
+                this.alertMessage = 'User activated successfully';
+                this.alertType = 'success';
+            },
+            (error) => {
+                this.isAlertClosed = false;
+                this.alertMessage = 'Error activated user';
+                this.alertType = 'danger';
+            }
+        );
     }
 
     public getValidClass(formItem: string) {

@@ -1,1 +1,31 @@
-<p>changepwd works!</p>
+<div [@routerTransition]>
+    <app-page-header [heading]="'Change Password'" [icon]="'fa-table'"></app-page-header>
+
+    <form [formGroup]="userForm" (ngSubmit)="onChangePassword()">
+        <div class="form-group row">
+            <div class="col-sm-6">
+                <button type="submit" class="btn btn-outline-primary mr-2 pull-left" >Ganti Password</button>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="username" class="col-sm-2 col-form-label">Username</label>
+            <div class="col-sm-10">
+              <input type="text" disabled="true" formControlName="username" class="form-control" id="username" required>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="userPassword" class="col-sm-2 col-form-label">Password Baru</label>
+            <div class="col-sm-10">
+            <input type="password" formControlName="userPassword" [ngClass]="getValidClass('userPassword')" id="userPassword" required>
+            </div>
+        </div>
+    </form>
+
+    <p>
+        <ngb-alert [dismissible]="true" type="{{ alertType }}" *ngIf="!isAlertClosed" (close)="isAlertClosed=true">
+            {{ alertMessage }}
+        </ngb-alert>
+    </p>
+</div>

@@ -18,7 +18,7 @@
             <label for="username" class="col-sm-2 col-form-label">Username</label>
             <div class="col-sm-10">
             <input type="text" *ngIf="isSuperUser" disabled="true" formControlName="username" class="form-control" id="username" required>
-            <input type="text" *ngIf="!isSuperUser" formControlName="username" class="form-control" id="username" required>
+            <input type="text" *ngIf="!isSuperUser" disabled="true" formControlName="username" class="form-control" id="username" required>
             </div>
         </div>
 
@@ -26,7 +26,7 @@
             <label for="email" class="col-sm-2 col-form-label">Email</label>
             <div class="col-sm-10">
             <input type="text" *ngIf="isSuperUser" disabled="true" formControlName="email" class="form-control" id="email" required>
-            <input type="text" *ngIf="!isSuperUser" formControlName="email" class="form-control" id="email" required>
+            <input type="text" *ngIf="!isSuperUser" disabled="true" formControlName="email" class="form-control" id="email" required>
             </div>
         </div>
 
@@ -34,7 +34,7 @@
             <label for="userLevel" class="col-sm-2 col-form-label">User Level</label>
             <div class="col-sm-10">
             <input type="text" *ngIf="isSuperUser" disabled="true" formControlName="userLevel" class="form-control" id="userLevel" required>
-            <input type="text" *ngIf="!isSuperUser" formControlName="userLevel" class="form-control" id="userLevel" required>
+            <input type="text" *ngIf="!isSuperUser" disabled="true" formControlName="userLevel" class="form-control" id="userLevel" required>
             </div>
         </div>
 
@@ -44,7 +44,7 @@
                 <select *ngIf="isSuperUser" class="form-control" formControlName="propinsi" required>
                     <option *ngFor="let sex of jenisKelaminList" [ngValue]="sex">{{ sex.deskripsi }}</option>
                 </select>
-                <input type="text" *ngIf="!isSuperUser" formControlName="propinsi" class="form-control" id="propinsi" required>
+                <input type="text" *ngIf="!isSuperUser" disabled="true" formControlName="propinsi" class="form-control" id="propinsi" required>
             </div>
         </div>
 
@@ -54,7 +54,7 @@
                 <select *ngIf="isSuperUser" class="form-control" formControlName="kabkota" required>
                     <option *ngFor="let sex of jenisKelaminList" [ngValue]="sex">{{ sex.deskripsi }}</option>
                 </select>
-                <input type="text" *ngIf="!isSuperUser" formControlName="kabkota" class="form-control" id="kabkota" required>
+                <input type="text" *ngIf="!isSuperUser" disabled="true" formControlName="kabkota" class="form-control" id="kabkota" required>
             </div>
         </div>
 
@@ -64,7 +64,7 @@
                 <select *ngIf="isSuperUser" class="form-control" formControlName="kecamatan" required>
                     <option *ngFor="let sex of jenisKelaminList" [ngValue]="sex">{{ sex.deskripsi }}</option>
                 </select>
-                <input type="text" *ngIf="!isSuperUser" formControlName="kecamatan" class="form-control" id="kecamatan" required>
+                <input type="text" *ngIf="!isSuperUser" disabled="true" formControlName="kecamatan" class="form-control" id="kecamatan" required>
             </div>
         </div>
 
@@ -74,7 +74,7 @@
                 <select *ngIf="isSuperUser" class="form-control" formControlName="desa" required>
                     <option *ngFor="let sex of jenisKelaminList" [ngValue]="sex">{{ sex.deskripsi }}</option>
                 </select>
-                <input type="text" *ngIf="!isSuperUser" formControlName="desa" class="form-control" id="desa" required>
+                <input type="text" *ngIf="!isSuperUser" disabled="true" formControlName="desa" class="form-control" id="desa" required>
             </div>
         </div>
 
@@ -84,7 +84,7 @@
                 <select *ngIf="isSuperUser" class="form-control" formControlName="rw" required>
                     <option *ngFor="let sex of jenisKelaminList" [ngValue]="sex">{{ sex.deskripsi }}</option>
                 </select>
-                <input type="text" *ngIf="!isSuperUser" formControlName="rw" class="form-control" id="rw" required>
+                <input type="text" *ngIf="!isSuperUser" disabled="true" formControlName="rw" class="form-control" id="rw" required>
             </div>
         </div>
 
@@ -94,7 +94,7 @@
                 <select *ngIf="isSuperUser" class="form-control" formControlName="rt" required>
                     <option *ngFor="let sex of jenisKelaminList" [ngValue]="sex">{{ sex.deskripsi }}</option>
                 </select>
-                <input type="text" *ngIf="!isSuperUser" formControlName="rt" class="form-control" id="rt" required>
+                <input type="text" *ngIf="!isSuperUser" disabled="true" formControlName="rt" class="form-control" id="rt" required>
             </div>
         </div>
 

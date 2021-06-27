@@ -24,6 +24,9 @@ import { UserUtils } from '../shared/utils/user.utils';
 })
 export class LoginComponent implements OnInit {
     public loginForm: FormGroup;
+    public isAlertClosed: Boolean = true;
+    public alertMessage: String = '';
+
     constructor(private authService: AuthService,
         private tipesService: TipesService,
         private utilsService: UtilsService,
@@ -88,7 +91,10 @@ export class LoginComponent implements OnInit {
                     }
                 },
                 (error) => {
-                    console.log('login failed');
+                    this.isAlertClosed = false;
+                    if (error && error.error && error.error.message) {
+                        this.alertMessage = 'Login gagal : ' + error.error.message;
+                    }
                 }
             );
     }

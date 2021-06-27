@@ -4,7 +4,7 @@ import { StorageMap } from '@ngx-pwa/local-storage';
 import { map } from 'rxjs/operators';
 import { StorageConstants } from '../../shared/constants/storage.constants';
 import { environment } from '../../../environments/environment';
-import { UserDto } from '../dto/user.dto';
+import { ActivateUserDto, ChangePasswordUserDto, RegistrationStatus, UserDto } from '../dto/user.dto';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -48,4 +48,27 @@ export class UserService {
         }
     }
 
+    public activate(userData: ActivateUserDto) {
+        if (userData) {
+            return this.http
+            .post<any>(`${environment.apiServiceUrl}users/activate`, userData)
+            .pipe(
+                map((status: RegistrationStatus) => {
+                    return status;
+                })
+            );
+        }
+    }
+
+    public changePassword(userData: ChangePasswordUserDto) {
+        if (userData) {
+            return this.http
+            .post<any>(`${environment.apiServiceUrl}users/changepwd`, userData)
+            .pipe(
+                map((status: RegistrationStatus) => {
+                    return status;
+                })
+            );
+        }
+    }
 }

@@ -18,3 +18,17 @@ export interface UserDto {
     namaRT?: number;
     password?: string;
 }
+
+export interface ActivateUserDto {
+    username: string;
+}
+
+export interface RegistrationStatus {
+    success: boolean;
+    message: string;
+}
+
+export interface ChangePasswordUserDto {
+    username: string;
+    password: string;
+}

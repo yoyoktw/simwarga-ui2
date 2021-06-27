@@ -5,6 +5,7 @@ export interface WargaDto {
     nama: string;
     email: string;
     rt: number;
+    rw?: number;
     nomorKK: string;
     asalKTP?: string;
     jenisKelamin: number;
