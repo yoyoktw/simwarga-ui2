@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
+import { WargaParam } from '../core/dto/warga.dto';
 import { AuthService } from '../core/services/auth.service';
 import { DesaService } from '../core/services/desa.service';
 import { KabkotaService } from '../core/services/kabkota.service';
@@ -72,7 +73,13 @@ export class LoginComponent implements OnInit {
                         this.authService.getCurrentUser().pipe(first()).subscribe(
                             (responseUser) => {
                                 if (responseUser) {
-                                    this.wargaService.getDaftarWarga().subscribe();
+                                    if (!UserUtils.isSuperUser(responseUser.userLevel)) {
+                                        const wargaParam: WargaParam = {
+                                            rt: responseUser.rt,
+                                            rw: responseUser.rw
+                                        };
+                                        this.wargaService.getDaftarWarga(wargaParam).subscribe();
+                                    }
                                     this.propinsiService.getListPropinsi().subscribe();
                                     this.kabkotaService.getListKabkota().subscribe();
                                     this.kecamatanService.getListKecamatan().subscribe();

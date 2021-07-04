@@ -27,4 +27,11 @@ export interface WargaDto {
     vaksinCovidKe1?: string;
     vaksinCovidKe2?: string;
     vaksinCovidKe3?: string;
+    familyGroup?: string;
+    isKK?: boolean;
+}
+
+export interface WargaParam {
+    rt: number;
+    rw: number;
 }

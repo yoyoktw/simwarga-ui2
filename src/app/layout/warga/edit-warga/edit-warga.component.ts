@@ -6,7 +6,7 @@ import { AfterViewChecked,
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { StorageMap } from '@ngx-pwa/local-storage';
-import { WargaDto } from '../../../core/dto/warga.dto';
+import { WargaDto, WargaParam } from '../../../core/dto/warga.dto';
 import { WargaService } from '../../../core/services/warga.service';
 import { StorageConstants } from '../../../shared/constants/storage.constants';
 import { routerTransition } from '../../../router.animations';
@@ -308,7 +308,11 @@ export class EditWargaComponent implements OnInit, AfterViewChecked {
         .pipe(first())
         .subscribe(
             (response) => {
-                this.wargaService.getDaftarWarga().subscribe();
+                const wargaParam: WargaParam = {
+                    rt: this.profile.rt,
+                    rw: this.profile.rw
+                };
+                this.wargaService.getDaftarWarga(wargaParam).subscribe();
                 this.isAlertClosed = false;
                 this.alertMessage = 'Warga saved successfully';
                 this.alertType = 'success';
