@@ -68,6 +68,16 @@ export class TipesService {
                             this.storage.set(StorageConstants.SETTINGS_TIPEID_USER_LEVEL, userLevel.id)
                             .subscribe(() => {});
                         }
+                        const alasanPengurangan = tipes.find(tipe => tipe.nama && tipe.nama.toUpperCase() === 'ALASAN PENGURANGAN');
+                        if (alasanPengurangan) {
+                            this.storage.set(StorageConstants.SETTINGS_TIPEID_ALASAN_PENGURANGAN, alasanPengurangan.id)
+                            .subscribe(() => {});
+                        }
+                        const alasanPenambahan = tipes.find(tipe => tipe.nama && tipe.nama.toUpperCase() === 'ALASAN PENAMBAHAN');
+                        if (alasanPenambahan) {
+                            this.storage.set(StorageConstants.SETTINGS_TIPEID_ALASAN_PENAMBAHAN, alasanPenambahan.id)
+                            .subscribe(() => {});
+                        }
                     }
                     return tipes;
                 })

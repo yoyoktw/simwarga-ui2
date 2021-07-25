@@ -41,6 +41,12 @@ export class StorageConstants {
     public static SETTINGS_TIPEID_USER_LEVEL = 'userLevelId';
     public static SETTINGS_UTILS_USER_LEVEL = 'userLevel';
 
+    public static SETTINGS_TIPEID_ALASAN_PENGURANGAN = 'alasanPenguranganId';
+    public static SETTINGS_UTILS_ALASAN_PENGURANGAN = 'alasanPengurangan';
+
+    public static SETTINGS_TIPEID_ALASAN_PENAMBAHAN = 'alasanPenambahanId';
+    public static SETTINGS_UTILS_ALASAN_PENAMBAHAN = 'alasanPenambahan';
+
     public static SETTINGS_PROPINSI = 'propinsi';
     public static SETTINGS_KABKOTA = 'kabkota';
     public static SETTINGS_KECAMATAN = 'kecamatan';
@@ -49,5 +55,6 @@ export class StorageConstants {
     public static SETTINGS_RT = 'rt';
 
     public static SETTINGS_WARGA = 'warga';
+    public static SETTINGS_WARGA_KK = 'wargaKK';
     public static SETTINGS_USERS = 'users';
 }

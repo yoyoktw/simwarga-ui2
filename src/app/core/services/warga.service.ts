@@ -25,13 +25,22 @@ export class WargaService {
     }
 
     public getDaftarWarga(wargaParam: WargaParam) {
-        const params: HttpParams = this.getNonEmptyHttpQueryParams({rt: wargaParam.rt.toString(), rw: wargaParam.rw.toString()});
+        let rtData = '';
+        if (wargaParam.rt) {
+            rtData = wargaParam.rt.toString();
+        }
+        const params: HttpParams = this.getNonEmptyHttpQueryParams({rt: rtData, rw: wargaParam.rw.toString()});
         return this.http
             .get<any>(`${environment.apiServiceUrl}warga`, {params: params})
             .pipe(
                 map((daftarWarga: WargaDto[]) => {
                     if (daftarWarga) {
                         this.storage.set(StorageConstants.SETTINGS_WARGA, daftarWarga).subscribe(() => {});
+                        const daftarWargaKK = daftarWarga.filter((warga: WargaDto) => warga.isKK && warga.isKK === true &&
+                        warga.isAktif && warga.isAktif === true );
+                        if (daftarWargaKK && daftarWargaKK.length > 0) {
+                            this.storage.set(StorageConstants.SETTINGS_WARGA_KK, daftarWargaKK).subscribe(() => {});
+                        }
                     }
                     return daftarWarga;
                 })

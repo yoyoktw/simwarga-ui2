@@ -36,4 +36,13 @@ export class UserUtils {
 
         return result;
     }
+
+    public static isWarga(userLevel?: String): boolean {
+        let result = false;
+        if (userLevel && userLevel.toLowerCase() === Constants.USER_WARGA) {
+            result = true;
+        }
+
+        return result;
+    }
 }

@@ -42,7 +42,7 @@
     <div class="form-group row">
         <label for="userLevel" class="col-sm-2 col-form-label">User Level</label>
         <div class="col-sm-6">
-            <select formControlName="userLevel" [ngClass]="getValidClass('userLevel')" required>
+            <select formControlName="userLevel" [ngClass]="getValidClass('userLevel')" required (change)="userLevelChanged()">
                 <option *ngFor="let userLevel of userLevelList" [ngValue]="userLevel">{{ userLevel.deskripsi }}</option>
             </select>
         </div>
@@ -93,11 +93,20 @@
         </div>
     </div>
 
-    <div class="form-group row">
+    <div class="form-group row" *ngIf="isRTVisible">
         <label for="rt" class="col-sm-2 col-form-label">RT</label>
         <div class="col-sm-6">
-            <select formControlName="rt" [ngClass]="getValidClass('rt')" required>
+            <select formControlName="rt" [ngClass]="getValidClass('rt')">
                 <option *ngFor="let rt of rtList" [ngValue]="rt">{{ rt.nama }}</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row" *ngIf="isWargaVisible">
+        <label for="warga" class="col-sm-2 col-form-label">Warga</label>
+        <div class="col-sm-6">
+            <select formControlName="warga" [ngClass]="getValidClass('warga')">
+                <option *ngFor="let warga of wargaKKList" [ngValue]="warga">{{ getFamilyGroupLabel(warga) }}</option>
             </select>
         </div>
     </div>

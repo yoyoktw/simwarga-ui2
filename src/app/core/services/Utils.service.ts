@@ -119,6 +119,24 @@ export class UtilsService {
                                 }
                             }
                         });
+                        this.storage.get(StorageConstants.SETTINGS_TIPEID_ALASAN_PENGURANGAN).subscribe(alasanPenguranganId  => {
+                            if (alasanPenguranganId) {
+                                const alasanPenguranganList = utils.filter(util => util.tipe === alasanPenguranganId);
+                                if (alasanPenguranganList) {
+                                    this.storage.set(StorageConstants.SETTINGS_UTILS_ALASAN_PENGURANGAN, alasanPenguranganList)
+                                    .subscribe(() => {});
+                                }
+                            }
+                        });
+                        this.storage.get(StorageConstants.SETTINGS_TIPEID_ALASAN_PENAMBAHAN).subscribe(alasanPenambahanId  => {
+                            if (alasanPenambahanId) {
+                                const alasanPenambahanList = utils.filter(util => util.tipe === alasanPenambahanId);
+                                if (alasanPenambahanList) {
+                                    this.storage.set(StorageConstants.SETTINGS_UTILS_ALASAN_PENAMBAHAN, alasanPenambahanList)
+                                    .subscribe(() => {});
+                                }
+                            }
+                        });
                     }
                     return utils;
                 })

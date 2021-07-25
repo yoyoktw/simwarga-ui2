@@ -12,6 +12,7 @@
           <thead>
           <tr>
             <th scope="col">Nik</th>
+            <th scope="col" sortable="nomorKK" (sort)="onSort($event)">Nomor KK</th>
             <th scope="col" sortable="nama" (sort)="onSort($event)">Nama</th>
             <th scope="col" sortable="alamatTinggal" (sort)="onSort($event)">Alamat</th>
             <th scope="col" sortable="rt" (sort)="onSort($event)">RT</th>
@@ -24,6 +25,9 @@
             <!-- <th scope="row">{{ warga.nik }}</th> -->
             <td>
                 <ngb-highlight [result]="warga.nik" [term]="service.searchTerm"></ngb-highlight>
+            </td>
+            <td>
+              <ngb-highlight [result]="warga.nomorKK" [term]="service.searchTerm"></ngb-highlight>
             </td>
             <td>
                 <ngb-highlight [result]="warga.nama" [term]="service.searchTerm"></ngb-highlight>

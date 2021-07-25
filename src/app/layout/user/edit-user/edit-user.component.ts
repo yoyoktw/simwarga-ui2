@@ -14,6 +14,8 @@ import { DesaDto } from '../../../core/dto/desa.dto';
 import { RWDto } from '../../../core/dto/rw.dto';
 import { RTDto } from '../../../core/dto/rt.dto';
 import { first } from 'rxjs/operators';
+import { WargaDto } from '../../../core/dto/warga.dto';
+import { UserUtils } from '../../../shared/utils/user.utils';
 
 @Component({
   selector: 'app-edit-user',
@@ -37,6 +39,9 @@ export class EditUserComponent implements OnInit {
     public alertType: String = 'success';
     public isHidePassword = false;
     public isHideActive = true;
+    public wargaKKList;
+    public isWargaVisible = false;
+    public isRTVisible = false;
 
     constructor(private route: ActivatedRoute, private userService: UserService, private storage: StorageMap) {
         this.userForm = new FormGroup({
@@ -49,7 +54,8 @@ export class EditUserComponent implements OnInit {
             kecamatan: new FormControl(null, [Validators.required]),
             desa: new FormControl(null, [Validators.required]),
             rw: new FormControl(null, [Validators.required]),
-            rt: new FormControl(null, [Validators.required]),
+            rt: new FormControl(null),
+            warga: new FormControl(null),
             userPassword: new FormControl(null),
         });
 
@@ -88,6 +94,11 @@ export class EditUserComponent implements OnInit {
                 this.rtList = rts;
             }
         });
+        this.storage.get(StorageConstants.SETTINGS_WARGA_KK).subscribe((listWargaKK: WargaDto[]) => {
+            if (listWargaKK) {
+                this.wargaKKList = listWargaKK;
+            }
+        });
 
     }
 
@@ -105,7 +116,8 @@ export class EditUserComponent implements OnInit {
                 desa: '',
                 rw: '',
                 rt: '',
-                userPassword: ''
+                userPassword: '',
+                warga: ''
             });
             this.editHeader = 'Buat User Baru';
             this.isHideActive = false;
@@ -129,6 +141,7 @@ export class EditUserComponent implements OnInit {
                         this.editHeader = 'Edit User';
                         this.isHidePassword = true;
                         this.isHideActive = true;
+                        this.checkUserLevel(user.userLevel);
                     });
                 }
             });
@@ -172,6 +185,7 @@ export class EditUserComponent implements OnInit {
             desa: (this.userForm.get('desa').value).id,
             rw: (this.userForm.get('rw').value).id,
             rt: (this.userForm.get('rt').value).id,
+            nomorKK: (this.userForm.get('warga').value).nomorKK,
             password: this.userForm.get('userPassword').value,
         };
 
@@ -260,5 +274,29 @@ export class EditUserComponent implements OnInit {
             return this.rtList.find(item => item.id === id);
         }
         return '';
+    }
+
+    public getFamilyGroupLabel(wargaData: WargaDto) {
+        return wargaData.nomorKK + ' - ' + wargaData.nama;
+    }
+
+    public userLevelChanged() {
+        if (this.userForm.get('userLevel').value) {
+            const selectedUserLevel = this.userForm.get('userLevel').value;
+            this.checkUserLevel(selectedUserLevel.deskripsi);
+        }
+    }
+
+    private checkUserLevel(userLevel: string) {
+        if (UserUtils.isWarga(userLevel)) {
+            this.isRTVisible = true;
+            this.isWargaVisible = true;
+        } else if (UserUtils.isAdminRT(userLevel) || UserUtils.isPengurusRT(userLevel)) {
+            this.isRTVisible = true;
+            this.isWargaVisible = false;
+        } else {
+            this.isRTVisible = false;
+            this.isWargaVisible = false;
+        }
     }
 }

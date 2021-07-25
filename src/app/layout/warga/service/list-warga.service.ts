@@ -38,6 +38,7 @@ function sort(wargas: ListWarga[], column: SortColumn, direction: string): ListW
 
 function matches(warga: ListWarga, term: string, pipe: PipeTransform) {
     return warga.nik.toLowerCase().includes(term.toLowerCase())
+    || warga.nomorKK.toLowerCase().includes(term.toLowerCase())
     || warga.nama.toLowerCase().includes(term.toLowerCase())
     || warga.alamatTinggal.toLowerCase().includes(term.toLowerCase())
     || pipe.transform(warga.rt).includes(term)

@@ -5,7 +5,7 @@ export interface ListWarga {
     nama: string;
     email: string;
     rt: number;
-    // nomorKK: string;
+    nomorKK: string;
     // asalKTP?: string;
     // jenisKelamin: number;
     // tempatLahir: string;

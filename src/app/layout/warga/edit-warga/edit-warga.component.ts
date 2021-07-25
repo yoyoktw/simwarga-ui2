@@ -31,6 +31,7 @@ export class EditWargaComponent implements OnInit, AfterViewChecked {
 
     private editHeader: String;
     public wargaList;
+    public wargaKKList;
 
     public jenisKelaminList;
     public agamaList;
@@ -43,6 +44,12 @@ export class EditWargaComponent implements OnInit, AfterViewChecked {
     public golDarahList;
     public pernahCovidList;
     public profile: UserDto;
+    public isKKSelected = false;
+    public isAktif = true;
+    public alasanPenguranganList;
+    public alasanPenambahanList;
+    public hasSaveButton = true;
+    public isPenambahanBaru = false;
 
     constructor(private route: ActivatedRoute,
         private wargaService: WargaService,
@@ -75,12 +82,22 @@ export class EditWargaComponent implements OnInit, AfterViewChecked {
             pernahCovid: new FormControl(null),
             vaksinCovidKe1: new FormControl(null),
             vaksinCovidKe2: new FormControl(null),
-            vaksinCovidKe3: new FormControl(null)
+            vaksinCovidKe3: new FormControl(null),
+            isKK: new FormControl(null),
+            familyGroup: new FormControl(null),
+            alasanPengurangan: new FormControl(null),
+            alasanPenambahan: new FormControl(null)
         });
 
         this.storage.get(StorageConstants.SETTINGS_WARGA).subscribe((listWarga: WargaDto[]) => {
             if (listWarga) {
                 this.wargaList = listWarga;
+            }
+        });
+
+        this.storage.get(StorageConstants.SETTINGS_WARGA_KK).subscribe((listWargaKK: WargaDto[]) => {
+            if (listWargaKK) {
+                this.wargaKKList = listWargaKK;
             }
         });
 
@@ -134,6 +151,16 @@ export class EditWargaComponent implements OnInit, AfterViewChecked {
                 this.pernahCovidList = pernahCovidUtils;
             }
         });
+        this.storage.get(StorageConstants.SETTINGS_UTILS_ALASAN_PENGURANGAN).subscribe((alasanPenguranganUtils: ListUtil[]) => {
+            if (alasanPenguranganUtils) {
+                this.alasanPenguranganList = alasanPenguranganUtils;
+            }
+        });
+        this.storage.get(StorageConstants.SETTINGS_UTILS_ALASAN_PENAMBAHAN).subscribe((alasanPenambahanUtils: ListUtil[]) => {
+            if (alasanPenambahanUtils) {
+                this.alasanPenambahanList = alasanPenambahanUtils;
+            }
+        });
     }
 
     ngAfterViewChecked(): void {
@@ -171,8 +198,13 @@ export class EditWargaComponent implements OnInit, AfterViewChecked {
                 vaksinCovidKe1: '',
                 vaksinCovidKe2: '',
                 vaksinCovidKe3: '',
+                isKK: false,
+                familyGroup: '',
+                alasanPengurangan: '',
+                alasanPenambahan: '',
                 });
             this.editHeader = 'Buat Warga Baru';
+            this.isPenambahanBaru = true;
         } else {
             this.storage.get(StorageConstants.SETTINGS_WARGA).subscribe((listWarga: WargaDto[])  => {
                 if (listWarga) {
@@ -205,7 +237,13 @@ export class EditWargaComponent implements OnInit, AfterViewChecked {
                             vaksinCovidKe1: this.createDate(warga.vaksinCovidKe1),
                             vaksinCovidKe2: this.createDate(warga.vaksinCovidKe2),
                             vaksinCovidKe3: this.createDate(warga.vaksinCovidKe3),
+                            isKK: warga.isKK,
+                            familyGroup: this.getFamilyGroupById(warga.familyGroup),
+                            alasanPengurangan: this.getAlasanPenguranganById(warga.alasanPengurangan)
                         });
+                        this.isKKSelected = warga.isKK;
+                        this.hasSaveButton = warga.isAktif && warga.isAktif === true;
+                        this.isPenambahanBaru = false;
                     });
                     this.editHeader = 'Edit Warga';
                 }
@@ -221,6 +259,13 @@ export class EditWargaComponent implements OnInit, AfterViewChecked {
 
     public getHeaderTitle() {
         return this.editHeader;
+    }
+
+    private getFamilyGroupById(id: string) {
+        if (this.wargaKKList) {
+            return this.wargaKKList.find(item => item.id === id);
+        }
+        return '';
     }
 
     private getJenisKelaminById(id: Number) {
@@ -293,10 +338,20 @@ export class EditWargaComponent implements OnInit, AfterViewChecked {
         return '';
     }
 
+    private getAlasanPenguranganById(id: Number) {
+        if (this.alasanPenguranganList) {
+            return this.alasanPenguranganList.find(item => item.id === id);
+        }
+        return '';
+    }
+
     onFormSubmit() {
         this.wargaForm.get('vaksinCovidKe1').setErrors(null);
         this.wargaForm.get('vaksinCovidKe2').setErrors(null);
         this.wargaForm.get('vaksinCovidKe3').setErrors(null);
+        this.wargaForm.get('familyGroup').setErrors(null);
+        this.wargaForm.get('alasanPengurangan').setErrors(null);
+        this.wargaForm.get('alasanPenambahan').setErrors(null);
         if (this.wargaForm.invalid) {
             return;
         }
@@ -316,6 +371,7 @@ export class EditWargaComponent implements OnInit, AfterViewChecked {
                 this.isAlertClosed = false;
                 this.alertMessage = 'Warga saved successfully';
                 this.alertType = 'success';
+                this.hasSaveButton = wargaData.isAktif && wargaData.isAktif === true;
             },
             (error) => {
                 console.log('error saved warga');
@@ -347,17 +403,21 @@ export class EditWargaComponent implements OnInit, AfterViewChecked {
             alamatKTP: this.wargaForm.get('alamatKTP').value,
             statusWarga: (this.wargaForm.get('statusWarga').value).id,
             keterangan: this.wargaForm.get('keterangan').value,
+            isKK: this.isKKSelected,
+            isAktif: this.isAktif
         };
 
         if (wargaData && this.wargaForm.get('wargaId').value !== 'New') {
             wargaData.id = this.wargaForm.get('wargaId').value;
         }
-
+        if (this.wargaForm.get('golDarah').value && this.wargaForm.get('golDarah').value !== '') {
+            wargaData.golDarah = (this.wargaForm.get('golDarah').value).id;
+        }
         if (this.wargaForm.get('noHP').value && this.wargaForm.get('noHP').value !== '') {
             wargaData.noHP = this.wargaForm.get('noHP').value;
         }
-        if (this.wargaForm.get('golDarah').value && this.wargaForm.get('golDarah').value !== '') {
-            wargaData.golDarah = (this.wargaForm.get('golDarah').value).id;
+        if (this.wargaForm.get('familyGroup').value && this.wargaForm.get('familyGroup').value !== '') {
+            wargaData.familyGroup = (this.wargaForm.get('familyGroup').value).id;
         }
         if (this.wargaForm.get('pernahCovid').value && this.wargaForm.get('pernahCovid').value !== '') {
             wargaData.pernahCovid = (this.wargaForm.get('pernahCovid').value).id;
@@ -377,10 +437,20 @@ export class EditWargaComponent implements OnInit, AfterViewChecked {
         } else {
             wargaData.vaksinCovidKe3 = null;
         }
+        if (this.isPenambahanBaru && this.wargaForm.get('alasanPenambahan').value && this.wargaForm.get('alasanPenambahan').value !== '') {
+            wargaData.alasanPenambahan = (this.wargaForm.get('alasanPenambahan').value).id;
+        } else {
+            wargaData.alasanPenambahan = null;
+        }
 
         if (this.profile) {
             wargaData.rt = this.profile.rt;
             wargaData.rw = this.profile.rw;
+        }
+
+        if (this.wargaForm.get('alasanPengurangan').value && this.wargaForm.get('alasanPengurangan').value !== '') {
+            wargaData.alasanPengurangan = (this.wargaForm.get('alasanPengurangan').value).id;
+            wargaData.isAktif = false;
         }
 
         return wargaData;
@@ -407,5 +477,17 @@ export class EditWargaComponent implements OnInit, AfterViewChecked {
             return ngDate;
         }
         return null;
+    }
+
+    public isKKChange() {
+        if (this.wargaForm.get('isKK').value) {
+            this.isKKSelected = true;
+        } else {
+            this.isKKSelected = false;
+        }
+    }
+
+    public getFamilyGroupLabel(wargaData: WargaDto) {
+        return wargaData.nomorKK + ' - ' + wargaData.nama;
     }
 }

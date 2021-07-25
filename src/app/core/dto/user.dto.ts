@@ -17,6 +17,7 @@ export interface UserDto {
     rt?: number;
     namaRT?: number;
     password?: string;
+    nomorKK?: string;
 }
 
 export interface ActivateUserDto {

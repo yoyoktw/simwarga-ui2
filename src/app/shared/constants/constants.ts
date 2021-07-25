@@ -4,4 +4,5 @@ export class Constants {
     // public static USER_ADMIN_RW = 'admin rw';
     public static USER_PENGURUS_RW = 'pengurus rw';
     public static USER_PENGURUS_RT = 'pengurus rt';
+    public static USER_WARGA = 'warga';
 }

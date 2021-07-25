@@ -29,6 +29,9 @@ export interface WargaDto {
     vaksinCovidKe3?: string;
     familyGroup?: string;
     isKK?: boolean;
+    isAktif?: boolean;
+    alasanPengurangan?: number;
+    alasanPenambahan?: number;
 }
 
 export interface WargaParam {
