@@ -32,6 +32,10 @@ export interface WargaDto {
     isAktif?: boolean;
     alasanPengurangan?: number;
     alasanPenambahan?: number;
+    jenisVaksinCovidKe1?: number;
+    jenisVaksinCovidKe2?: number;
+    jenisVaksinCovidKe3?: number;
+    detailPekerjaan?: string;
 }
 
 export interface WargaParam {

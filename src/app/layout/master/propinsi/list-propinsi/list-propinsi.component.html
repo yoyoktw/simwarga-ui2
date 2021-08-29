@@ -13,6 +13,7 @@
           <tr>
             <th scope="col">#</th>
             <!-- <th scope="col" sortable="id" (sort)="onSort($event)">Id</th> -->
+            <th scope="col" sortable="code" (sort)="onSort($event)">Code</th>
             <th scope="col" sortable="nama" (sort)="onSort($event)">Nama</th>
             <!-- <th scope="col" sortable="population" (sort)="onSort($event)">Population</th> -->
             <!-- <th scope="col">Action</th> -->
@@ -21,6 +22,7 @@
           <tbody>
           <tr *ngFor="let propinsi of propinsis$ | async">
             <th scope="row">{{ propinsi.id }}</th>
+            <td><ngb-highlight [result]="propinsi.code" [term]="service.searchTerm"></ngb-highlight></td>
             <td>
               <!-- <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag" class="mr-2" style="width: 20px"> -->
               <ngb-highlight [result]="propinsi.nama" [term]="service.searchTerm"></ngb-highlight>

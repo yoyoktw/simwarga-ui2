@@ -47,6 +47,9 @@ export class StorageConstants {
     public static SETTINGS_TIPEID_ALASAN_PENAMBAHAN = 'alasanPenambahanId';
     public static SETTINGS_UTILS_ALASAN_PENAMBAHAN = 'alasanPenambahan';
 
+    public static SETTINGS_TIPEID_JENIS_VAKSIN_COVID19 = 'jenisVaksinCovid19Id';
+    public static SETTINGS_UTILS_JENIS_VAKSIN_COVID19 = 'jenisVaksinCovid19';
+
     public static SETTINGS_PROPINSI = 'propinsi';
     public static SETTINGS_KABKOTA = 'kabkota';
     public static SETTINGS_KECAMATAN = 'kecamatan';

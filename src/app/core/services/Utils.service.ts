@@ -137,6 +137,15 @@ export class UtilsService {
                                 }
                             }
                         });
+                        this.storage.get(StorageConstants.SETTINGS_TIPEID_JENIS_VAKSIN_COVID19).subscribe(jenisVaksinCovid19Id  => {
+                            if (jenisVaksinCovid19Id) {
+                                const jenisVaksinCovid19IdList = utils.filter(util => util.tipe === jenisVaksinCovid19Id);
+                                if (jenisVaksinCovid19IdList) {
+                                    this.storage.set(StorageConstants.SETTINGS_UTILS_JENIS_VAKSIN_COVID19, jenisVaksinCovid19IdList)
+                                    .subscribe(() => {});
+                                }
+                            }
+                        });
                     }
                     return utils;
                 })

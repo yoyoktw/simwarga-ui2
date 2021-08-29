@@ -36,7 +36,8 @@ function sort(propinsis: ListPropinsi[], column: SortColumn, direction: string):
 }
 
 function matches(propinsis: ListPropinsi, term: string, pipe: PipeTransform) {
-    return propinsis.nama.toLowerCase().includes(term.toLowerCase());
+    return propinsis.nama.toLowerCase().includes(term.toLowerCase())
+    || propinsis.code.toLowerCase().includes(term.toLowerCase());
 }
 
 @Injectable({providedIn: 'root'})
