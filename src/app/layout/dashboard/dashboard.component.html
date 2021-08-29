@@ -1,6 +1,7 @@
 <div [@routerTransition]>
-    <h2 class="text-muted">Dashboard <small>Statistics Overview</small></h2>
-    <div class="row">
+    <app-page-header [heading]="'Dashboard dan statistik'" [icon]="'fa-bar-chart-o'"></app-page-header>
+    <!-- <h2 class="text-muted"><small>Dashboard dan statistik</small></h2> -->
+    <!-- <div class="row">
         <div class="col-md-12">
             <ngb-carousel>
                 <ng-template *ngFor="let slider of sliders" ngbSlide>
@@ -17,8 +18,8 @@
                 </ng-template>
             </ngb-carousel>
         </div>
-    </div>
-    <hr />
+    </div> -->
+    <!-- <hr />
     <div class="row">
         <div class="col-xl-3 col-lg-6">
             <app-stat [bgClass]="'primary'" [count]="26" [icon]="'fa-comments'" [label]="'New Comments!'"></app-stat>
@@ -37,35 +38,110 @@
         <div class="col-xl-3 col-lg-6">
             <app-stat [bgClass]="'danger'" [count]="13" [icon]="'fa-support'" [label]="'New Tickets!'"></app-stat>
         </div>
-    </div>
-    <hr />
-    <ngb-alert (close)="closeAlert(alert)" *ngFor="let alert of alerts" [type]="alert.type">{{
+    </div> -->
+    <!-- <hr /> -->
+    <!-- <ngb-alert (close)="closeAlert(alert)" *ngFor="let alert of alerts" [type]="alert.type">{{
         alert.message
     }}</ngb-alert>
-    <hr />
+    <hr /> -->
     <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-6">
             <div class="card card-default">
-                <div class="card-header"><i class="fa fa-clock-o fa-fw"></i> Responsive Timeline</div>
+                <div class="card-header"><i class="fa fa-bar-chart-o fa-fw"></i> Total warga</div>
                 <!-- /.card-header -->
-                <app-timeline></app-timeline>
+                <!-- <app-timeline></app-timeline> -->
                 <!-- /.card-body -->
+
+                <canvas
+                (chartClick)="chartClicked($event)"
+                (chartHover)="chartHovered($event)"
+                [chartType]="doughnutChartType"
+                [data]="doughnutChartData"
+                [labels]="doughnutChartLabels"
+                baseChart
+                height="180px"
+                >
+                </canvas>
+
             </div>
             <!-- /.card -->
         </div>
         <!-- /.col-lg-8 -->
-        <div class="col-lg-4">
+        <div class="col-lg-6">
             <div class="card card-default mb-3">
-                <div class="card-header"><i class="fa fa-bell fa-fw"></i> Notifications card</div>
+                <div class="card-header"><i class="fa fa-bar-chart-o fa-fw"></i> Distribusi usia</div>
                 <!-- /.card-header -->
-                <app-notification></app-notification>
+                <!-- <app-notification></app-notification> -->
                 <!-- /.card-body -->
+
+                <canvas
+                (chartClick)="chartClicked($event)"
+                (chartHover)="chartHovered($event)"
+                [chartType]="doughnutChartType"
+                [data]="doughnutChartData"
+                [labels]="doughnutChartLabels"
+                baseChart
+                height="180px"
+                >
+                </canvas>
+
             </div>
             <!-- /.card -->
 
-            <app-chat></app-chat>
+            <!-- <app-chat></app-chat> -->
             <!-- /.card .chat-card -->
         </div>
         <!-- /.col-lg-4 -->
+
+        <div class="col-lg-6">
+            <div class="card card-default mb-3">
+                <div class="card-header"><i class="fa fa-bar-chart-o fa-fw"></i> Distribusi usia</div>
+                <!-- /.card-header -->
+                <!-- <app-notification></app-notification> -->
+                <!-- /.card-body -->
+
+                <canvas
+                (chartClick)="chartClicked($event)"
+                (chartHover)="chartHovered($event)"
+                [chartType]="doughnutChartType"
+                [data]="doughnutChartData"
+                [labels]="doughnutChartLabels"
+                baseChart
+                height="180px"
+                >
+                </canvas>
+
+            </div>
+            <!-- /.card -->
+
+            <!-- <app-chat></app-chat> -->
+            <!-- /.card .chat-card -->
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card card-default mb-3">
+                <div class="card-header"><i class="fa fa-bar-chart-o fa-fw"></i> Distribusi usia</div>
+                <!-- /.card-header -->
+                <!-- <app-notification></app-notification> -->
+                <!-- /.card-body -->
+
+                <canvas
+                (chartClick)="chartClicked($event)"
+                (chartHover)="chartHovered($event)"
+                [chartType]="doughnutChartType"
+                [data]="doughnutChartData"
+                [labels]="doughnutChartLabels"
+                baseChart
+                height="180px"
+                >
+                </canvas>
+
+            </div>
+            <!-- /.card -->
+
+            <!-- <app-chat></app-chat> -->
+            <!-- /.card .chat-card -->
+        </div>
+
     </div>
 </div>

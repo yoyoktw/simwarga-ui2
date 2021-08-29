@@ -8,6 +8,12 @@ import { routerTransition } from '../../router.animations';
     animations: [routerTransition()]
 })
 export class DashboardComponent implements OnInit {
+
+    // Doughnut
+    public doughnutChartLabels: string[] = ['Download Sales', 'In-Store Sales', 'Mail-Order Sales'];
+    public doughnutChartData: number[] = [350, 450, 100];
+    public doughnutChartType: string;
+
     public alerts: Array<any> = [];
     public sliders: Array<any> = [];
 
@@ -50,10 +56,22 @@ export class DashboardComponent implements OnInit {
         );
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.doughnutChartType = 'doughnut';
+    }
 
     public closeAlert(alert: any) {
         const index: number = this.alerts.indexOf(alert);
         this.alerts.splice(index, 1);
     }
+
+    // events
+    public chartClicked(e: any): void {
+        // console.log(e);
+    }
+
+    public chartHovered(e: any): void {
+        // console.log(e);
+    }
+
 }
