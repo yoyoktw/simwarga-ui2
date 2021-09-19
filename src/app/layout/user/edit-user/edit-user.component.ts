@@ -185,12 +185,15 @@ export class EditUserComponent implements OnInit {
             desa: (this.userForm.get('desa').value).id,
             rw: (this.userForm.get('rw').value).id,
             rt: (this.userForm.get('rt').value).id,
-            nomorKK: (this.userForm.get('warga').value).nomorKK,
             password: this.userForm.get('userPassword').value,
         };
 
         if (userData && this.userForm.get('userId').value !== 'New') {
             userData.id = this.userForm.get('userId').value;
+        }
+
+        if (userData && userData.userLevel === 'Warga') {
+            userData.nomorKK = (this.userForm.get('warga').value).nomorKK;
         }
 
         return userData;
