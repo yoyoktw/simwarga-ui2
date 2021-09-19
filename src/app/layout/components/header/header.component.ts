@@ -47,7 +47,8 @@ export class HeaderComponent implements OnInit {
         if (UserUtils.isPengurusRW(currentUser.userLevel)) {
             return 'RW ' + currentUser.namaRW.toString();
         }
-        if (UserUtils.isPengurusRT(currentUser.userLevel) || UserUtils.isAdminRT(currentUser.userLevel)) {
+        if (UserUtils.isPengurusRT(currentUser.userLevel) || UserUtils.isAdminRT(currentUser.userLevel) 
+        || UserUtils.isWarga(currentUser.userLevel)) {
             return 'RW ' + currentUser.namaRW.toString() + ' RT ' + currentUser.namaRT.toString() + ' ' + currentUser.namaDesa;
         }
         return '';
