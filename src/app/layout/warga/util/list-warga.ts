@@ -4,8 +4,10 @@ export interface ListWarga {
     nik: string;
     nama: string;
     email: string;
-    rt: number;
+    namaRT: string;
     nomorKK: string;
+    isKK: string;
+    familyGroup: string;
     // asalKTP?: string;
     // jenisKelamin: number;
     // tempatLahir: string;

@@ -21,6 +21,8 @@ interface State {
   searchTerm: string;
   sortColumn: SortColumn;
   sortDirection: SortDirection;
+  isKKSaja: boolean;
+  familyGroup: string;
 }
 
 const compare = (v1: string | number, v2: string | number) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
@@ -41,7 +43,7 @@ function matches(warga: ListWarga, term: string, pipe: PipeTransform) {
     || warga.nomorKK.toLowerCase().includes(term.toLowerCase())
     || warga.nama.toLowerCase().includes(term.toLowerCase())
     || warga.alamatTinggal.toLowerCase().includes(term.toLowerCase())
-    || pipe.transform(warga.rt).includes(term)
+    || warga.namaRT.toLowerCase().includes(term.toLowerCase())
     || warga.email.toLowerCase().includes(term.toLowerCase());
 }
 
@@ -59,7 +61,9 @@ export class ListWargaService {
     pageSize: 10,
     searchTerm: '',
     sortColumn: '',
-    sortDirection: ''
+    sortDirection: '',
+    isKKSaja: false,
+    familyGroup: ''
   };
 
   constructor(private pipe: DecimalPipe, private storage: StorageMap) {
@@ -94,6 +98,8 @@ export class ListWargaService {
   set searchTerm(searchTerm: string) { this._set({searchTerm}); }
   set sortColumn(sortColumn: SortColumn) { this._set({sortColumn}); }
   set sortDirection(sortDirection: SortDirection) { this._set({sortDirection}); }
+  set isKKSaja(isKKSaja: boolean) { this._set({isKKSaja}); }
+  set familyGroup(familyGroup: string) { this._set({familyGroup}); }
 
   private _set(patch: Partial<State>) {
     Object.assign(this._state, patch);
@@ -101,13 +107,19 @@ export class ListWargaService {
   }
 
   private _search(): Observable<SearchResult> {
-    const {sortColumn, sortDirection, pageSize, page, searchTerm} = this._state;
+    const {sortColumn, sortDirection, pageSize, page, searchTerm, isKKSaja, familyGroup} = this._state;
 
     // 1. sort
     let wargas = sort(this._wargaList, sortColumn, sortDirection);
 
     // 2. filter
     wargas = wargas.filter(warga => matches(warga, searchTerm, this.pipe));
+    if (isKKSaja) {
+      wargas = wargas.filter(warga => warga.isKK.toString() === isKKSaja.toString());
+    }
+    if (familyGroup) {
+      wargas = wargas.filter(warga => warga.familyGroup === familyGroup);
+    }
     const total = wargas.length;
 
     // 3. paginate

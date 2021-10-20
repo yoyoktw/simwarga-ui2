@@ -7,6 +7,20 @@
             Cari: <input class="form-control ml-2" type="text" name="searchTerm" [(ngModel)]="service.searchTerm"/>
             <span class="ml-3" *ngIf="service.loading$ | async">Loading...</span>
         </div>
+        <form [formGroup]="searchForm">
+          <div class="form-group form-inline">
+            <label for="isKKSelected" class="col-form-label">KK saja ?</label>
+            <div class="col-sm-1">
+              <input formControlName="isKKSelected" type="checkbox" value="" name="isKKSelected" id="isKKSelected" [(ngModel)]="isSearchKKSaja" (change)="isKKSajaChange()"/>
+            </div>
+            <label for="familyGroup" class="col-form-label">Per KK</label>
+            <div class="col-sm-5">
+              <select formControlName="familyGroup" (change)="perKKChange()">
+                  <option *ngFor="let wargaKK of wargaKKList" [ngValue]="wargaKK">{{ getFamilyGroupLabel(wargaKK) }}</option>
+              </select>
+            </div>
+        </div>
+      </form>
 
         <table class="table table-striped">
           <thead>
@@ -36,7 +50,7 @@
                 <ngb-highlight [result]="warga.alamatTinggal" [term]="service.searchTerm"></ngb-highlight>
             </td>
             <td>
-                <ngb-highlight [result]="warga.rt | number" [term]="service.searchTerm"></ngb-highlight>
+                <ngb-highlight [result]="warga.namaRT" [term]="service.searchTerm"></ngb-highlight>
             </td>
             <td>
                 <ngb-highlight [result]="warga.email" [term]="service.searchTerm"></ngb-highlight>
