@@ -91,7 +91,9 @@ export class EditWargaComponent implements OnInit, AfterViewChecked {
             jenisVaksinCovidKe1: new FormControl(null),
             jenisVaksinCovidKe2: new FormControl(null),
             jenisVaksinCovidKe3: new FormControl(null),
-            detailPekerjaan: new FormControl(null)
+            detailPekerjaan: new FormControl(null),
+            komorbid: new FormControl(null),
+            alasanTidakVaksin: new FormControl(null)
         });
 
         this.storage.get(StorageConstants.SETTINGS_WARGA).subscribe((listWarga: WargaDto[]) => {
@@ -215,7 +217,9 @@ export class EditWargaComponent implements OnInit, AfterViewChecked {
                 jenisVaksinCovidKe1: '',
                 jenisVaksinCovidKe2: '',
                 jenisVaksinCovidKe3: '',
-                detailPekerjaan: ''
+                detailPekerjaan: '',
+                komorbid: '',
+                alasanTidakVaksin: ''
                 });
             this.editHeader = 'Buat Warga Baru';
             this.isPenambahanBaru = true;
@@ -257,7 +261,9 @@ export class EditWargaComponent implements OnInit, AfterViewChecked {
                             jenisVaksinCovidKe1: this.getJenisVaksinCovid19ById(warga.jenisVaksinCovidKe1),
                             jenisVaksinCovidKe2: this.getJenisVaksinCovid19ById(warga.jenisVaksinCovidKe2),
                             jenisVaksinCovidKe3: this.getJenisVaksinCovid19ById(warga.jenisVaksinCovidKe3),
-                            detailPekerjaan: warga.detailPekerjaan
+                            detailPekerjaan: warga.detailPekerjaan,
+                            komorbid: warga.komorbid,
+                            alasanTidakVaksin: warga.alasanTidakVaksin
                         });
                         this.isKKSelected = warga.isKK;
                         this.hasSaveButton = warga.isAktif && warga.isAktif === true;
@@ -432,6 +438,8 @@ export class EditWargaComponent implements OnInit, AfterViewChecked {
             statusWarga: (this.wargaForm.get('statusWarga').value).id,
             keterangan: this.wargaForm.get('keterangan').value,
             detailPekerjaan: this.wargaForm.get('detailPekerjaan').value,
+            komorbid: this.wargaForm.get('komorbid').value,
+            alasanTidakVaksin: this.wargaForm.get('alasanTidakVaksin').value,
             isKK: this.isKKSelected,
             isAktif: this.isAktif
         };

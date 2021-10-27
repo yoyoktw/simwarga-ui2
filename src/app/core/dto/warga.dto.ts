@@ -36,6 +36,8 @@ export interface WargaDto {
     jenisVaksinCovidKe2?: number;
     jenisVaksinCovidKe3?: number;
     detailPekerjaan?: string;
+    komorbid?: string;
+    alasanTidakVaksin?: string;
 }
 
 export interface WargaParam {
