@@ -146,6 +146,15 @@ export class UtilsService {
                                 }
                             }
                         });
+                        this.storage.get(StorageConstants.SETTINGS_TIPEID_TIPE_DOKUMEN).subscribe(tipeDokumenId  => {
+                            if (tipeDokumenId) {
+                                const tipeDokumenIdList = utils.filter(util => util.tipe === tipeDokumenId);
+                                if (tipeDokumenIdList) {
+                                    this.storage.set(StorageConstants.SETTINGS_UTILS_TIPE_DOKUMEN, tipeDokumenIdList)
+                                    .subscribe(() => {});
+                                }
+                            }
+                        });
                     }
                     return utils;
                 })

@@ -83,6 +83,11 @@ export class TipesService {
                             this.storage.set(StorageConstants.SETTINGS_TIPEID_JENIS_VAKSIN_COVID19, jenisVaksinCovid19.id)
                             .subscribe(() => {});
                         }
+                        const tipeDokumen = tipes.find(tipe => tipe.nama && tipe.nama.toUpperCase() === 'TIPE DOKUMEN');
+                        if (tipeDokumen) {
+                            this.storage.set(StorageConstants.SETTINGS_TIPEID_TIPE_DOKUMEN, tipeDokumen.id)
+                            .subscribe(() => {});
+                        }
                     }
                     return tipes;
                 })

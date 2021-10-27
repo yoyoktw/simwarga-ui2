@@ -339,13 +339,13 @@
                             <div class="form-group row">
                                 <label for="komorbid" class="col-sm-2 col-form-label">Penyakit penyerta (Komorbid)</label>
                                 <div class="col-sm-10">
-                                    <textarea class="form-control" rows="5" formControlName="komorbid" id="komorbid"></textarea>
+                                    <textarea class="form-control" rows="3" formControlName="komorbid" id="komorbid"></textarea>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="alasanTidakVaksin" class="col-sm-2 col-form-label">Alasan tidak vaksin</label>
                                 <div class="col-sm-10">
-                                    <textarea class="form-control" rows="5" formControlName="alasanTidakVaksin" id="alasanTidakVaksin"></textarea>
+                                    <textarea class="form-control" rows="3" formControlName="alasanTidakVaksin" id="alasanTidakVaksin"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -358,14 +358,41 @@
                 <a ngbNavLink>Dokumen</a>
                 <ng-template ngbNavContent>
   
-                <div class="form-group row">
-                    <label for="golDarah" class="col-sm-2 col-form-label">Tipe Dokumen</label>
-                    <div class="col-sm-3">
-                        <select [ngClass]="getValidClass('golDarah')" formControlName="golDarah">
-                            <option *ngFor="let darah of golDarahList" [ngValue]="darah">{{ darah.deskripsi }}</option>
-                        </select>
+                    <div class="form-group row">
+                        <label for="tipeDokumen" class="col-sm-2 col-form-label">Tipe Dokumen</label>
+                        <div class="col-sm-3">
+                            <select [ngClass]="getValidClass('tipeDokumen')" formControlName="tipeDokumen">
+                                <option *ngFor="let dokumen of tipeDokumenList" [ngValue]="dokumen">{{ dokumen.deskripsi }}</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
+                    <div class="form-group row">
+                        <label for="exampleInputFile" class="col-sm-2 col-form-label">Dokumen</label>
+                        <input class="col-sm-3 form-control-file" id="exampleInputFile" type="file" />
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-1">
+                            <button class="btn btn-primary">Upload dokumen</button>
+                        </div>
+                    </div>
+
+                    <!-- <div class="form-group row">
+                        <div class="col-sm-1">
+                            <button (click)="open(content)" class="btn btn-primary">Upload dokumen</button>
+                        </div>
+                        <ng-template #content let-c="close" let-d="dismiss">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Upload Dokumen</h5>
+                            </div>
+                            <div class="modal-body">
+                            </div>
+                            <div class="modal-footer">
+                                <button (click)="c('Close click')" class="btn btn-primary" type="button">Close</button>
+                            </div>
+                        </ng-template>
+        
+                    </div> -->
 
                 <div class="card">
                     <div class="card-header">Daftar Dokumen</div>

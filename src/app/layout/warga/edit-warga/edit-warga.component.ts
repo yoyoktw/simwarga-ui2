@@ -12,7 +12,7 @@ import { StorageConstants } from '../../../shared/constants/storage.constants';
 import { routerTransition } from '../../../router.animations';
 import { ListUtil } from '../../settings/utils/util/list-util';
 import { first } from 'rxjs/operators';
-import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { ModalDismissReasons, NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserDto } from '../../../core/dto/user.dto';
 
 @Component({
@@ -51,11 +51,15 @@ export class EditWargaComponent implements OnInit, AfterViewChecked {
     public hasSaveButton = true;
     public isPenambahanBaru = false;
     public jenisVaksinCovid19List;
+    public tipeDokumenList;
+
+    closeResult: string;
 
     constructor(private route: ActivatedRoute,
         private wargaService: WargaService,
         private storage: StorageMap,
-        private readonly changeDetectorRef: ChangeDetectorRef) {
+        private readonly changeDetectorRef: ChangeDetectorRef,
+        private modalService: NgbModal) {
         this.wargaForm = new FormGroup({
             wargaId: new FormControl(),
             // idType: new FormControl(null, [Validators.required]),
@@ -93,7 +97,8 @@ export class EditWargaComponent implements OnInit, AfterViewChecked {
             jenisVaksinCovidKe3: new FormControl(null),
             detailPekerjaan: new FormControl(null),
             komorbid: new FormControl(null),
-            alasanTidakVaksin: new FormControl(null)
+            alasanTidakVaksin: new FormControl(null),
+            tipeDokumen: new FormControl(null)
         });
 
         this.storage.get(StorageConstants.SETTINGS_WARGA).subscribe((listWarga: WargaDto[]) => {
@@ -173,6 +178,11 @@ export class EditWargaComponent implements OnInit, AfterViewChecked {
                 this.jenisVaksinCovid19List = jenisVaksinCovid19s;
             }
         });
+        this.storage.get(StorageConstants.SETTINGS_UTILS_TIPE_DOKUMEN).subscribe((tipeDokumens: ListUtil[]) => {
+            if (tipeDokumens) {
+                this.tipeDokumenList = tipeDokumens;
+            }
+        });
     }
 
     ngAfterViewChecked(): void {
@@ -219,7 +229,8 @@ export class EditWargaComponent implements OnInit, AfterViewChecked {
                 jenisVaksinCovidKe3: '',
                 detailPekerjaan: '',
                 komorbid: '',
-                alasanTidakVaksin: ''
+                alasanTidakVaksin: '',
+                tipeDokumen: ''
                 });
             this.editHeader = 'Buat Warga Baru';
             this.isPenambahanBaru = true;
@@ -542,4 +553,26 @@ export class EditWargaComponent implements OnInit, AfterViewChecked {
     public getFamilyGroupLabel(wargaData: WargaDto) {
         return wargaData.nomorKK + ' - ' + wargaData.nama;
     }
+
+    open(content) {
+        this.modalService.open(content).result.then(
+            (result) => {
+                this.closeResult = `Closed with: ${result}`;
+            },
+            (reason) => {
+                this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+            }
+        );
+    }
+
+    private getDismissReason(reason: any): string {
+        if (reason === ModalDismissReasons.ESC) {
+            return 'by pressing ESC';
+        } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+            return 'by clicking on a backdrop';
+        } else {
+            return `with: ${reason}`;
+        }
+    }
+
 }
