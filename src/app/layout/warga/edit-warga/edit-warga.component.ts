@@ -1,7 +1,9 @@
 import { AfterViewChecked,
     ChangeDetectorRef,
     Component,
+    ElementRef,
     OnInit,
+    ViewChild,
     ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -12,8 +14,12 @@ import { StorageConstants } from '../../../shared/constants/storage.constants';
 import { routerTransition } from '../../../router.animations';
 import { ListUtil } from '../../settings/utils/util/list-util';
 import { first } from 'rxjs/operators';
-import { ModalDismissReasons, NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalDismissReasons, NgbDateStruct, NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { UserDto } from '../../../core/dto/user.dto';
+import { DokumenService } from '../../../core/services/dokumen.service';
+import { DokumenDto } from '../../../core/dto/dokumen.dto';
+import { BehaviorSubject } from 'rxjs';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-edit-warga',
@@ -25,6 +31,7 @@ import { UserDto } from '../../../core/dto/user.dto';
 })
 export class EditWargaComponent implements OnInit, AfterViewChecked {
     public wargaForm: FormGroup;
+    public uploadDokumenForm: FormGroup;
     public isAlertClosed: Boolean = true;
     public alertMessage: String = '';
     public alertType: String = 'success';
@@ -52,11 +59,23 @@ export class EditWargaComponent implements OnInit, AfterViewChecked {
     public isPenambahanBaru = false;
     public jenisVaksinCovid19List;
     public tipeDokumenList;
+    public dokumenList;
+
+    private dokumenFile: File;
+
+    @ViewChild('dokumenFileInput')
+    dokumenFileInput: ElementRef;
+
+    private daftarDokumen$ = new BehaviorSubject<DokumenDto[]>([]);
 
     closeResult: string;
 
+
+    public imagePath: any;
+
     constructor(private route: ActivatedRoute,
         private wargaService: WargaService,
+        private dokumenService: DokumenService,
         private storage: StorageMap,
         private readonly changeDetectorRef: ChangeDetectorRef,
         private modalService: NgbModal) {
@@ -97,8 +116,12 @@ export class EditWargaComponent implements OnInit, AfterViewChecked {
             jenisVaksinCovidKe3: new FormControl(null),
             detailPekerjaan: new FormControl(null),
             komorbid: new FormControl(null),
-            alasanTidakVaksin: new FormControl(null),
-            tipeDokumen: new FormControl(null)
+            alasanTidakVaksin: new FormControl(null)
+        });
+
+        this.uploadDokumenForm = new FormGroup({
+            tipeDokumen: new FormControl(null),
+            dokumen: new FormControl(null)
         });
 
         this.storage.get(StorageConstants.SETTINGS_WARGA).subscribe((listWarga: WargaDto[]) => {
@@ -229,11 +252,14 @@ export class EditWargaComponent implements OnInit, AfterViewChecked {
                 jenisVaksinCovidKe3: '',
                 detailPekerjaan: '',
                 komorbid: '',
-                alasanTidakVaksin: '',
-                tipeDokumen: ''
+                alasanTidakVaksin: ''
                 });
             this.editHeader = 'Buat Warga Baru';
             this.isPenambahanBaru = true;
+            this.uploadDokumenForm.patchValue({
+                tipeDokumen: '',
+                dokumen: ''
+            });
         } else {
             this.storage.get(StorageConstants.SETTINGS_WARGA).subscribe((listWarga: WargaDto[])  => {
                 if (listWarga) {
@@ -279,6 +305,14 @@ export class EditWargaComponent implements OnInit, AfterViewChecked {
                         this.isKKSelected = warga.isKK;
                         this.hasSaveButton = warga.isAktif && warga.isAktif === true;
                         this.isPenambahanBaru = false;
+                        this.storage.get(StorageConstants.SETTINGS_DOKUMEN).subscribe((dokumens: DokumenDto[]) => {
+                            if (dokumens) {
+                                this.dokumenList = dokumens.filter((dokumen: DokumenDto) => dokumen.wargaId === warga.id);
+                                if (this.dokumenList) {
+                                    this.daftarDokumen$.next(this.dokumenList);
+                                }
+                            }
+                        });
                     });
                     this.editHeader = 'Edit Warga';
                 }
@@ -523,6 +557,10 @@ export class EditWargaComponent implements OnInit, AfterViewChecked {
         return this.wargaForm.invalid && this.wargaForm.get(formItem).invalid ? 'form-control is-invalid' : 'form-control';
     }
 
+    public getUploadValidClass(formItem: string) {
+        return this.uploadDokumenForm.invalid && this.uploadDokumenForm.get(formItem).invalid ? 'form-control is-invalid' : 'form-control';
+    }
+
     private getDate(tgl: any) {
         if (tgl && tgl !== '') {
             return tgl.year + '-' + tgl.month + '-' + tgl.day;
@@ -554,15 +592,36 @@ export class EditWargaComponent implements OnInit, AfterViewChecked {
         return wargaData.nomorKK + ' - ' + wargaData.nama;
     }
 
-    open(content) {
-        this.modalService.open(content).result.then(
-            (result) => {
-                this.closeResult = `Closed with: ${result}`;
-            },
-            (reason) => {
-                this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-            }
-        );
+    createImageFromBlob(image: Blob, content: any) {
+        const reader = new FileReader();
+        reader.addEventListener('load', () => {
+            this.imagePath = reader.result;
+
+            const modalOption: NgbModalOptions = {
+                centered: true,
+                scrollable: true,
+                size: 'lg'
+            };
+
+            this.modalService.open(content, modalOption).result.then(
+                (result) => {
+                    this.closeResult = `Closed with: ${result}`;
+                },
+                (reason) => {
+                    this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+                }
+            );
+
+        }, false);
+        if (image) {
+           reader.readAsDataURL(image);
+        }
+    }
+
+    open(content: any, url: string) {
+        this.dokumenService.getDokumenByUrl(url).subscribe((baseImage: any) => {
+            this.createImageFromBlob(baseImage, content);
+        });
     }
 
     private getDismissReason(reason: any): string {
@@ -575,4 +634,41 @@ export class EditWargaComponent implements OnInit, AfterViewChecked {
         }
     }
 
+    onFileChange(fileChangeEvent) {
+        this.dokumenFile = fileChangeEvent.target.files[0];
+    }
+
+    public onUploadDokumen() {
+        if (this.dokumenFile) {
+            this.uploadDokumenForm.get('dokumen').setErrors(null);
+        }
+        if (this.uploadDokumenForm.invalid) {
+            return;
+        }
+        const tipeDokumen = (this.uploadDokumenForm.get('tipeDokumen').value).deskripsi;
+        const wargaId = this.wargaForm.get('wargaId').value;
+        if (wargaId && tipeDokumen && this.dokumenFile) {
+            this.dokumenService.saveDokumen(wargaId, tipeDokumen, this.dokumenFile)
+            .pipe(first())
+            .subscribe(
+                (response) => {
+                    this.uploadDokumenForm.patchValue({
+                        tipeDokumen: '',
+                        dokumen: ''
+                    });
+                    this.dokumenFile = undefined;
+                    this.dokumenFileInput.nativeElement.value = '';
+
+                    const rtWarga = this.wargaForm.get('rt').value;
+                    this.dokumenService.getDokumen(rtWarga).subscribe((dokumenResponse) => {
+                        if (dokumenResponse) {
+                            this.dokumenList = dokumenResponse.filter((dokumen: DokumenDto) => dokumen.wargaId === wargaId);
+                            if (this.dokumenList) {
+                                this.daftarDokumen$.next(this.dokumenList);
+                            }
+                        }
+                    });
+                });
+        }
+    }
 }

@@ -60,6 +60,8 @@ export class StorageConstants {
     public static SETTINGS_RW = 'rw';
     public static SETTINGS_RT = 'rt';
 
+    public static SETTINGS_DOKUMEN = 'dokumen';
+
     public static SETTINGS_WARGA = 'warga';
     public static SETTINGS_WARGA_KK = 'wargaKK';
     public static SETTINGS_USERS = 'users';
