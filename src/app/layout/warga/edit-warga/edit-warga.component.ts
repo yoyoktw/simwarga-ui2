@@ -621,7 +621,11 @@ export class EditWargaComponent implements OnInit, AfterViewChecked {
     open(content: any, url: string) {
         this.dokumenService.getDokumenByUrl(url).subscribe((baseImage: any) => {
             this.createImageFromBlob(baseImage, content);
-        });
+        },
+        (error) => {
+            alert('File tidak ditemukan...');
+        }
+        );
     }
 
     private getDismissReason(reason: any): string {
