@@ -15,6 +15,7 @@
             <!-- <th scope="col" sortable="id" (sort)="onSort($event)">Id</th> -->
             <th scope="col" sortable="nama" (sort)="onSort($event)">Nama</th>
             <th scope="col" sortable="isSystem" >Is Sistem?</th>
+            <th scope="col" sortable="hasAktifFlag" >Has Aktif Flag?</th>
             <!-- <th scope="col" sortable="population" (sort)="onSort($event)">Population</th> -->
             <!-- <th scope="col">Action</th> -->
           </tr>
@@ -29,7 +30,10 @@
             <td>
                 <ngb-highlight [result]="tipe.isSystem" ></ngb-highlight>
             </td>
-            <!-- <td><ngb-highlight [result]="country.area | number" [term]="service.searchTerm"></ngb-highlight></td> -->
+            <td>
+              <ngb-highlight [result]="tipe.hasAktifFlag" ></ngb-highlight>
+            </td>
+          <!-- <td><ngb-highlight [result]="country.area | number" [term]="service.searchTerm"></ngb-highlight></td> -->
             <!-- <td><ngb-highlight [result]="country.population | number" [term]="service.searchTerm"></ngb-highlight></td> -->
             <!-- <td>
                 <button type="button" class="btn btn-outline-primary mr-2 bi-alarm" [routerLink]="['/tipes', tipe.id]">Edit</button>
