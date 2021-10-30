@@ -27,12 +27,14 @@ export class EditUtilComponent implements OnInit {
     private isDeskripsiValid: Boolean = true;
     private isTipeValid: Boolean = true;
     private editHeader: String;
+    public isDisplayAktif: Boolean = false;
 
   constructor(private route: ActivatedRoute, private utilsService: UtilsService, private storage: StorageMap) {
     this.utilForm = new FormGroup({
         utilId: new FormControl(),
         deskripsiUtil: new FormControl(null, [Validators.required]),
-        tipe: new FormControl(null, [Validators.required])
+        tipe: new FormControl(null, [Validators.required]),
+        isAktif: new FormControl(null)
     });
 
     this.storage.get(StorageConstants.SETTINGS_TIPES).subscribe((tipes: ListTipe[]) => {
@@ -49,19 +51,27 @@ export class EditUtilComponent implements OnInit {
         this.utilForm.patchValue({
             utilId: 'New',
             deskripsiUtil: '',
-            tipe: ''
+            tipe: '',
+            isAktif: false
         });
         this.editHeader = 'Buat Util Baru';
     } else {
         this.storage.get(StorageConstants.SETTINGS_UTILS).subscribe((utilList: UtilDto[])  => {
             if (utilList) {
                 utilList.filter(util => util.id === utilId).map(util => {
+                    const tipe = this.getTipeById(util.tipe)
                     this.utilForm.patchValue({
                         utilId: util.id.toString(),
                         deskripsiUtil: util.deskripsi,
-                        tipe: this.getTipeById(util.tipe)
+                        tipe: tipe,
+                        isAktif: util.isAktif
                     });
                     this.editHeader = 'Edit Util';
+                    if (tipe.hasAktifFlag) {
+                        this.isDisplayAktif = true;
+                    } else {
+                        this.isDisplayAktif = false;
+                    }
                 });
             }
         });
@@ -90,6 +100,7 @@ export class EditUtilComponent implements OnInit {
         deskripsi: this.utilForm.get('deskripsiUtil').value,
         tipe: (this.utilForm.get('tipe').value).id,
         isSystem: (this.utilForm.get('tipe').value).isSystem,
+        isAktif: this.utilForm.get('isAktif').value,
     };
 
     this.utilsService
@@ -124,4 +135,11 @@ export class EditUtilComponent implements OnInit {
     return this.editHeader;
   }
 
+  public tipeChange() {
+    if ((this.utilForm.get('tipe').value).hasAktifFlag) {
+        this.isDisplayAktif = true;
+    } else {
+        this.isDisplayAktif = false;
+    }
+  }
 }
