@@ -26,7 +26,8 @@ export class EditTipeComponent implements OnInit {
         this.tipeForm = new FormGroup({
             tipeId: new FormControl(),
             namaTipe: new FormControl(null, [Validators.required]),
-            isSystem: new FormControl(null)
+            isSystem: new FormControl(null),
+            hasAktifFlag: new FormControl(null)
         });
     }
 
@@ -36,7 +37,8 @@ export class EditTipeComponent implements OnInit {
             this.tipeForm.patchValue({
                 tipeId: 'New',
                 namaTipe: '',
-                isSystem: false
+                isSystem: false,
+                hasAktifFlag: false
             });
             this.editHeader = 'Buat Tipe Baru';
         } else {
@@ -46,7 +48,8 @@ export class EditTipeComponent implements OnInit {
                         this.tipeForm.patchValue({
                             tipeId: tipe.id.toString(),
                             namaTipe: tipe.nama,
-                            isSystem: tipe.isSystem
+                            isSystem: tipe.isSystem,
+                            hasAktifFlag: tipe.hasAktifFlag
                         });
                         this.editHeader = 'Edit Tipe';
                     });
@@ -68,6 +71,7 @@ export class EditTipeComponent implements OnInit {
             id: this.tipeForm.get('tipeId').value === 'New' ? 0 : this.tipeForm.get('tipeId').value,
             nama: this.tipeForm.get('namaTipe').value,
             isSystem : this.tipeForm.get('isSystem').value,
+            hasAktifFlag : this.tipeForm.get('hasAktifFlag').value,
         };
 
         this.tipesService

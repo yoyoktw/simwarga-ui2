@@ -4,4 +4,5 @@ export interface UtilDto {
     tipe: number;
     namaTipe?: string;
     isSystem?: boolean;
+    isAktif?: boolean;
 }
