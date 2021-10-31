@@ -20,6 +20,10 @@ const routes: Routes = [
                 loadChildren: () => import('./user/user.module').then((m) => m.UserModule)
             },
             {
+                path: 'dokumens',
+                loadChildren: () => import('./dokumens/dokumens.module').then((m) => m.DokumensModule)
+            },
+            {
                 path: 'propinsi',
                 loadChildren: () => import('./master/propinsi/propinsi.module').then((m) => m.PropinsiModule)
             },
