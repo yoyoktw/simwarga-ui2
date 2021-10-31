@@ -37,8 +37,8 @@ export class DokumenService {
 
     }
 
-    public getDokumen(rt: string) {
-        const params: HttpParams = this.getNonEmptyHttpQueryParams({rt: rt});
+    public getDokumen(rt: number) {
+        const params: HttpParams = this.getNonEmptyHttpQueryParams({rt: rt.toString()});
         return this.http
             .get<any>(`${environment.apiServiceUrl}dokumen`, {params: params})
             .pipe(

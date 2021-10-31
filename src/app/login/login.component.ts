@@ -5,6 +5,7 @@ import { first } from 'rxjs/operators';
 import { WargaParam } from '../core/dto/warga.dto';
 import { AuthService } from '../core/services/auth.service';
 import { DesaService } from '../core/services/desa.service';
+import { DokumenService } from '../core/services/dokumen.service';
 import { KabkotaService } from '../core/services/kabkota.service';
 import { KecamatanService } from '../core/services/kecamatan.service';
 import { PropinsiService } from '../core/services/propinsi.service';
@@ -39,6 +40,7 @@ export class LoginComponent implements OnInit {
         private rwService: RWService,
         private rtService: RTService,
         private userService: UserService,
+        private dokumenService: DokumenService,
         private router: Router) {
             this.loginForm = new FormGroup({
                 username: new FormControl(),
@@ -79,6 +81,7 @@ export class LoginComponent implements OnInit {
                                             rw: responseUser.rw
                                         };
                                         this.wargaService.getDaftarWarga(wargaParam).subscribe();
+                                        this.dokumenService.getDokumen(responseUser.rt).subscribe();
                                     }
                                     this.propinsiService.getListPropinsi().subscribe();
                                     this.kabkotaService.getListKabkota().subscribe();
