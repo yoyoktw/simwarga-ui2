@@ -294,7 +294,8 @@ export class EditUserComponent implements OnInit {
         if (UserUtils.isWarga(userLevel)) {
             this.isRTVisible = true;
             this.isWargaVisible = true;
-        } else if (UserUtils.isAdminRT(userLevel) || UserUtils.isPengurusRT(userLevel)) {
+        } else if (UserUtils.isAdminRT(userLevel) || UserUtils.isPengurusRT(userLevel) ||
+        UserUtils.isBendaharaRT(userLevel) || UserUtils.isKetuaRT(userLevel) || UserUtils.isSekretarisRT(userLevel)) {
             this.isRTVisible = true;
             this.isWargaVisible = false;
         } else {

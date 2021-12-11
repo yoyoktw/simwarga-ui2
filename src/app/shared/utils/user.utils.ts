@@ -19,6 +19,33 @@ export class UserUtils {
         return result;
     }
 
+    public static isBendaharaRT(userLevel?: String): boolean {
+        let result = false;
+        if (userLevel && userLevel.toLowerCase() === Constants.USER_BENDAHARA_RT) {
+            result = true;
+        }
+
+        return result;
+    }
+
+    public static isKetuaRT(userLevel?: String): boolean {
+        let result = false;
+        if (userLevel && userLevel.toLowerCase() === Constants.USER_KETUA_RT) {
+            result = true;
+        }
+
+        return result;
+    }
+
+    public static isSekretarisRT(userLevel?: String): boolean {
+        let result = false;
+        if (userLevel && userLevel.toLowerCase() === Constants.USER_SEKRETARIS_RT) {
+            result = true;
+        }
+
+        return result;
+    }
+
     public static isPengurusRW(userLevel?: String): boolean {
         let result = false;
         if (userLevel && userLevel.toLowerCase() === Constants.USER_PENGURUS_RW) {
